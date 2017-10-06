@@ -1,0 +1,46 @@
+[2017-10-06 11:50:42.857] [basic_logger] [warning] 0.0115413 : Trade not successfull
+[2017-10-06 11:50:42.861] [basic_logger] [warning] 0.109857 : Trade not successfull
+[2017-10-06 11:50:42.864] [basic_logger] [warning] 1.60492 : Trade not successfull
+[2017-10-06 11:50:42.864] [basic_logger] [warning] 1.65002 : Trade not successfull
+[2017-10-06 11:50:42.865] [basic_logger] [warning] 1.72721 : Trade not successfull
+[2017-10-06 11:50:42.869] [basic_logger] [warning] 2.21693 : Trade not successfull
+[2017-10-06 11:50:42.870] [basic_logger] [warning] 2.34459 : Trade not successfull
+[2017-10-06 11:50:42.873] [basic_logger] [warning] 2.39248 : Trade not successfull
+[2017-10-06 11:50:42.889] [basic_logger] [warning] 2.46918 : **********************
+[2017-10-06 11:50:42.889] [basic_logger] [warning] 2.46918 : ASK : Cancellation not successfull
+[2017-10-06 11:50:42.891] [basic_logger] [warning] 2.73437 : Trade not successfull
+[2017-10-06 11:50:42.965] [basic_logger] [warning] 5.0468 : BID: Cancellation not successfull
+[2017-10-06 11:50:43.005] [basic_logger] [warning] 5.21888 : ASK : Cancellation not successfull
+[2017-10-06 11:50:43.066] [basic_logger] [warning] 6.12241 : ASK : Cancellation not successfull
+[2017-10-06 11:50:43.148] [basic_logger] [warning] 9.08648 : **********************
+[2017-10-06 11:50:43.148] [basic_logger] [warning] 9.08648 : ASK : Cancellation not successfull
+[2017-10-06 11:50:43.195] [basic_logger] [warning] 9.57915 : ASK : Cancellation not successfull
+[2017-10-06 11:50:43.273] [basic_logger] [warning] 12.3212 : ASK : Cancellation not successfull
+[2017-10-06 11:50:43.331] [basic_logger] [warning] 14.3507 : **********************
+[2017-10-06 11:50:43.331] [basic_logger] [warning] 14.3507 : BID: Cancellation not successfull
+[2017-10-06 11:50:43.379] [basic_logger] [warning] 14.6388 : BID: Cancellation not successfull
+[2017-10-06 11:50:43.445] [basic_logger] [warning] 15.1388 : ASK : Cancellation not successfull
+[2017-10-06 11:50:43.468] [basic_logger] [warning] 15.3815 : **********************
+[2017-10-06 11:50:43.468] [basic_logger] [warning] 15.3815 : BID: Cancellation not successfull
+[2017-10-06 11:50:43.548] [basic_logger] [warning] 16.8662 : ASK : Cancellation not successfull
+[2017-10-06 11:50:43.577] [basic_logger] [warning] 17.4379 : **********************
+[2017-10-06 11:50:43.577] [basic_logger] [warning] 17.4379 : BID: Cancellation not successfull
+[2017-10-06 11:50:43.645] [basic_logger] [warning] 19.069 : BID: Cancellation not successfull
+[2017-10-06 11:50:43.707] [basic_logger] [warning] 19.1038 : ASK : Cancellation not successfull
+[2017-10-06 11:50:43.803] [basic_logger] [warning] 19.1803 : ASK : Cancellation not successfull
+[2017-10-06 11:50:43.910] [basic_logger] [warning] 22.1127 : **********************
+[2017-10-06 11:50:43.910] [basic_logger] [warning] 22.1127 : ASK : Cancellation not successfull
+[2017-10-06 11:50:43.985] [basic_logger] [warning] 24.9032 : **********************
+[2017-10-06 11:50:43.985] [basic_logger] [warning] 24.9032 : BID: Cancellation not successfull
+[2017-10-06 11:50:44.015] [basic_logger] [warning] 24.9475 : **********************
+[2017-10-06 11:50:44.015] [basic_logger] [warning] 24.9475 : BID: Cancellation not successfull
+[2017-10-06 11:50:44.046] [basic_logger] [warning] 25.3066 : **********************
+[2017-10-06 11:50:44.046] [basic_logger] [warning] 25.3066 : BID: Cancellation not successfull
+[2017-10-06 11:50:44.119] [basic_logger] [warning] 26.4713 : **********************
+[2017-10-06 11:50:44.119] [basic_logger] [warning] 26.4713 : BID: Cancellation not successfull
+[2017-10-06 11:50:44.183] [basic_logger] [warning] 26.7646 : BID: Cancellation not successfull
+[2017-10-06 11:50:44.238] [basic_logger] [warning] 26.7701 : **********************
+[2017-10-06 11:50:44.238] [basic_logger] [warning] 26.7701 : BID: Cancellation not successfull
+[2017-10-06 11:50:44.315] [basic_logger] [warning] 26.8337 : **********************
+[2017-10-06 11:50:44.315] [basic_logger] [warning] 26.8337 : ASK : Cancellation not successfull
+[20
