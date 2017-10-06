@@ -97,7 +97,7 @@ public:
 
 	~Client() = default;
 
-	std::vector<ClientOrder> Query(double current_time, const std::list<int>& quotes);
+	std::vector<ClientOrder> Query(double current_time);
 
 private:
 	class PoissonProcess
@@ -129,7 +129,7 @@ private:
 
 
 
-std::vector<ClientOrder> Client::Query(double current_time, const std::list<int>& quotes)
+std::vector<ClientOrder> Client::Query(double current_time)
 {
 	std::vector<ClientOrder> batch; 
 	int order_type{ 0 };
@@ -168,13 +168,15 @@ std::vector<ClientOrder> Client::Query(double current_time, const std::list<int>
 					case 2:
 					{
 						// Checking whether we are cancelling existing quotes
+						/*
 						if (quotes.empty())
 						{
 							break;
 						}
+						*/
 
 						batch.emplace_back(sp->_last_event, _default_cancel_size,
-							_default_cancel_price, order_type, quotes.front());
+							_default_cancel_price, order_type, _id[order_type]);
 
 						break;
 					}

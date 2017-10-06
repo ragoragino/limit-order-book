@@ -24,13 +24,13 @@ public:
 
 	~Book() = default;
 
-	static std::map< int, std::list<int> > quote_id;
-
 	virtual void Act(ClientOrder& order, int exchange_id) {};
 
 	virtual double nbbo() = 0;
 
 	static std::vector<double> nbbo_var;
+
+	std::map< int, std::list<int> > quote_id;
 
 protected:
 	std::shared_ptr<spdlog::logger> _logger_device;
@@ -78,11 +78,11 @@ public:
 
 	~Tick() = default;
 
-	bool quote(const ClientOrder& client_order, int in_exchange_id);
+	bool quote(const ClientOrder& client_order, int in_exchange_id, std::list<int>& quote_id);
 
-	double trade(const ClientOrder& client_order);
+	double trade(const ClientOrder& client_order, std::map< int, std::list<int> >& quote_id);
 
-	bool cancel(const ClientOrder& client_order, int in_exchange_id);
+	bool cancel(const ClientOrder& client_order, int in_exchange_id, std::list<int>& quote_id);
 
 	bool empty()
 	{
@@ -94,17 +94,17 @@ private:
 };
 
 
-bool Tick::quote(const ClientOrder& client_order, int in_exchange_id)
+bool Tick::quote(const ClientOrder& client_order, int in_exchange_id, std::list<int>& quote_id)
 {
 	_tick.emplace_back(client_order.size, client_order.id, in_exchange_id);
 
-	Book::quote_id[in_exchange_id].emplace_back(client_order.id);
+	quote_id.emplace_back(client_order.id);
 
 	return true;
 }
 
 
-double Tick::trade(const ClientOrder& client_order)
+double Tick::trade(const ClientOrder& client_order, std::map< int, std::list<int> >& quote_id)
 {
 	int client_order_size = client_order.size;
 	while (client_order_size != 0)
@@ -123,7 +123,7 @@ double Tick::trade(const ClientOrder& client_order)
 		{
 			client_order_size -= _tick[0]._size;
 
-			Book::quote_id[_tick[0]._exchange_id].remove(_tick[0]._id);
+			quote_id[_tick[0]._exchange_id].remove(_tick[0]._id);
 
 			_tick.pop_front();
 		}
@@ -133,7 +133,7 @@ double Tick::trade(const ClientOrder& client_order)
 }
 
 
-bool Tick::cancel(const ClientOrder& client_order, int in_exchange_id)
+bool Tick::cancel(const ClientOrder& client_order, int in_exchange_id, std::list<int>& quote_id)
 {
 	for (std::deque<Order>::iterator i = _tick.begin(); i != _tick.end(); ++i)
 	{
@@ -141,7 +141,7 @@ bool Tick::cancel(const ClientOrder& client_order, int in_exchange_id)
 		{
 			_tick.erase(i);
 
-			Book::quote_id[in_exchange_id].remove(client_order.id);
+			quote_id.remove(client_order.id);
 
 			return true;
 		}
@@ -191,7 +191,7 @@ public:
 
 private:
 	double _default_price;
-	std::map< double, Tick, std::greater<double> > _side;
+	std::map< double, Tick, std::less<double> > _side;
 };
 
 
@@ -228,8 +228,8 @@ double Bid::nbbo()
 	{
 		if (!(it->second).empty())
 		{
-			Book::nbbo_var[0] = it->first;
-			return it->first;
+			Book::nbbo_var[0] = Book::nbbo_var[1] - it->first;
+			return Book::nbbo_var[0];
 		}
 	}
 	
@@ -243,8 +243,8 @@ double Ask::nbbo()
 	{
 		if (!(it->second).empty())
 		{
-			Book::nbbo_var[1] = it->first;
-			return it->first;
+			Book::nbbo_var[1] = Book::nbbo_var[0] + it->first;
+			return Book::nbbo_var[1];
 		}
 	}
 
@@ -261,8 +261,8 @@ void Bid::Act(ClientOrder& order, int in_exchange_id)
 	{
 		case 0:
 		{
-			double order_price = decimal_round(Book::nbbo_var[1] - order.price, 2);
-	 		res = _side[order_price].quote(order, in_exchange_id);
+			double order_price = order.price;
+	 		res = _side[order_price].quote(order, in_exchange_id, quote_id[in_exchange_id]);
 			if (!res)
 			{
 				_logger_device->warn("{} : Quote not successfull", order.time);
@@ -276,7 +276,7 @@ void Bid::Act(ClientOrder& order, int in_exchange_id)
 			res = order.size;
 			for (std::map<double, Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
 			{
-				res = (it->second).trade(order);
+				res = (it->second).trade(order, quote_id);
 				if (decimal_round(res, 2) == 0.0)
 				{
 					break;
@@ -293,17 +293,27 @@ void Bid::Act(ClientOrder& order, int in_exchange_id)
 
 		case 2:
 		{
+			if (quote_id[in_exchange_id].empty())
+			{
+				_logger_device->warn("{} : Cancellation not successfull - order book empty", order.time);
+				break;
+			}
+
+			order.id = quote_id[in_exchange_id].front();
+
 			for (std::map<double, Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
 			{
-				std::cout << it->first << std::endl;
-				res = (it->second).cancel(order, in_exchange_id);
+				res = (it->second).cancel(order, in_exchange_id, quote_id[in_exchange_id]);
 				if (res)
 				{
 					break;
 				}
-			}	
+			}
 
-			_logger_device->warn("{} : BID: Cancellation not successfull", order.time);
+			if (!res)
+			{
+				_logger_device->warn("{} : Cancellation not successfull - order not found", order.time);
+			}
 
 			break;
 		}
@@ -322,8 +332,8 @@ void Ask::Act(ClientOrder& order, int in_exchange_id)
 	{
 		case 0:
 		{
-			double order_price = decimal_round(Book::nbbo_var[0] + order.price, 2);
-			res = _side[order_price].quote(order, in_exchange_id);
+			double order_price = order.price;
+			res = _side[order_price].quote(order, in_exchange_id, quote_id[in_exchange_id]);
 			if (!res)
 			{
 				_logger_device->warn("{} : Quote not successfull", order.time);
@@ -336,7 +346,7 @@ void Ask::Act(ClientOrder& order, int in_exchange_id)
 			res = order.size;
 			for (std::map<double, Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
 			{
-				res = (it->second).trade(order);
+				res = (it->second).trade(order, quote_id);
 				if (res == 0.0)
 				{
 					break;
@@ -352,19 +362,32 @@ void Ask::Act(ClientOrder& order, int in_exchange_id)
 		}
 		case 2:
 		{
+			
+			if (quote_id[in_exchange_id].empty())
+			{
+				_logger_device->warn("{} : Cancellation not successfull - order book empty", order.time);
+
+				break;
+			}
+
+			order.id = quote_id[in_exchange_id].front();
+
 			for (std::map<double, Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
 			{
-				std::cout << it->first << std::endl;
-				res = (it->second).cancel(order, in_exchange_id);
+				res = (it->second).cancel(order, in_exchange_id, quote_id[in_exchange_id]);
 				if (res)
 				{
 					break;
 				}
 			}
 
-			_logger_device->warn("{} : Cancellation not successfull", order.time);
+			if (!res)
+			{
+				_logger_device->warn("{} : Cancellation not successfull - order not found", order.time);
+			}
 
 			break;
+
 		}
 	}
 
