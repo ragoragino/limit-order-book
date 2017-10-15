@@ -76,6 +76,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\Materials\Programming\C++\Libraries;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -140,6 +141,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Flow.h" />
+    <ClInclude Include="NonConstMap.h" />
     <ClInclude Include="VectorAllocator.h" />
     <ClInclude Include="Book.h" />
     <ClInclude Include="stdafx.h" />

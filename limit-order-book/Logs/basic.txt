@@ -1,287 +1,75 @@
-[2017-10-06 16:28:25.809] [basic_logger] [warning] 0.00641184 : Trade not successfull
-[2017-10-06 16:28:25.811] [basic_logger] [warning] 0.0610316 : Trade not successfull
-[2017-10-06 16:28:25.811] [basic_logger] [warning] 0.169361 : Trade not successfull
-[2017-10-06 16:28:25.811] [basic_logger] [warning] 0.228285 : Trade not successfull
-[2017-10-06 16:28:25.811] [basic_logger] [warning] 0.318576 : Trade not successfull
-[2017-10-06 16:28:25.811] [basic_logger] [warning] 0.760261 : Cancellation not - order book empty
-[2017-10-06 16:28:25.811] [basic_logger] [warning] 0.891624 : Trade not successfull
-[2017-10-06 16:28:25.813] [basic_logger] [warning] 1.06139 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:25.814] [basic_logger] [warning] 1.23163 : Trade not successfull
-[2017-10-06 16:28:25.814] [basic_logger] [warning] 1.32915 : Trade not successfull
-[2017-10-06 16:28:25.814] [basic_logger] [warning] 1.4115 : Trade not successfull
-[2017-10-06 16:28:25.814] [basic_logger] [warning] 1.50835 : Trade not successfull
-[2017-10-06 16:28:25.814] [basic_logger] [warning] 1.64402 : Trade not successfull
-[2017-10-06 16:28:25.814] [basic_logger] [warning] 1.76618 : Trade not successfull
-[2017-10-06 16:28:25.814] [basic_logger] [warning] 1.93801 : Trade not successfull
-[2017-10-06 16:28:25.815] [basic_logger] [warning] 2.1296 : Trade not successfull
-[2017-10-06 16:28:25.815] [basic_logger] [warning] 2.27958 : Trade not successfull
-[2017-10-06 16:28:25.815] [basic_logger] [warning] 2.34615 : Trade not successfull
-[2017-10-06 16:28:25.815] [basic_logger] [warning] 2.57468 : Trade not successfull
-[2017-10-06 16:28:25.815] [basic_logger] [warning] 2.61195 : Trade not successfull
-[2017-10-06 16:28:25.816] [basic_logger] [warning] 2.89662 : Trade not successfull
-[2017-10-06 16:28:25.823] [basic_logger] [warning] 5.5053 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:25.823] [basic_logger] [warning] 5.52928 : Trade not successfull
-[2017-10-06 16:28:25.824] [basic_logger] [warning] 5.84486 : Trade not successfull
-[2017-10-06 16:28:25.824] [basic_logger] [warning] 5.86187 : Trade not successfull
-[2017-10-06 16:28:25.824] [basic_logger] [warning] 5.94209 : Trade not successfull
-[2017-10-06 16:28:25.825] [basic_logger] [warning] 6.72733 : Trade not successfull
-[2017-10-06 16:28:25.825] [basic_logger] [warning] 6.91917 : Trade not successfull
-[2017-10-06 16:28:25.826] [basic_logger] [warning] 7.20274 : Trade not successfull
-[2017-10-06 16:28:25.838] [basic_logger] [warning] 14.3201 : Cancellation not - order book empty
-[2017-10-06 16:28:25.839] [basic_logger] [warning] 15.1023 : Cancellation not - order book empty
-[2017-10-06 16:28:25.848] [basic_logger] [warning] 20.2585 : Cancellation not - order book empty
-[2017-10-06 16:28:26.162] [basic_logger] [warning] 200.291 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:26.164] [basic_logger] [warning] 202.648 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:26.164] [basic_logger] [warning] 202.918 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:26.165] [basic_logger] [warning] 203.027 : Trade not successfull
-[2017-10-06 16:28:26.165] [basic_logger] [warning] 203.106 : Trade not successfull
-[2017-10-06 16:28:26.165] [basic_logger] [warning] 203.174 : Trade not successfull
-[2017-10-06 16:28:26.165] [basic_logger] [warning] 203.61 : Trade not successfull
-[2017-10-06 16:28:26.166] [basic_logger] [warning] 204.171 : Trade not successfull
-[2017-10-06 16:28:26.196] [basic_logger] [warning] 226.696 : Trade not successfull
-[2017-10-06 16:28:26.204] [basic_logger] [warning] 231.611 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:26.204] [basic_logger] [warning] 231.864 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:26.205] [basic_logger] [warning] 233.069 : Cancellation not - order book empty
-[2017-10-06 16:28:26.207] [basic_logger] [warning] 234.382 : Cancellation not - order book empty
-[2017-10-06 16:28:26.209] [basic_logger] [warning] 236.996 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:26.218] [basic_logger] [warning] 243.657 : Trade not successfull
-[2017-10-06 16:28:26.218] [basic_logger] [warning] 243.749 : Trade not successfull
-[2017-10-06 16:28:26.219] [basic_logger] [warning] 243.955 : Trade not successfull
-[2017-10-06 16:28:26.219] [basic_logger] [warning] 244.022 : Trade not successfull
-[2017-10-06 16:28:26.220] [basic_logger] [warning] 244.044 : Trade not successfull
-[2017-10-06 16:28:26.261] [basic_logger] [warning] 279.43 : Trade not successfull
-[2017-10-06 16:28:26.261] [basic_logger] [warning] 279.592 : Trade not successfull
-[2017-10-06 16:28:26.261] [basic_logger] [warning] 279.651 : Trade not successfull
-[2017-10-06 16:28:26.261] [basic_logger] [warning] 279.742 : Cancellation not - order book empty
-[2017-10-06 16:28:26.261] [basic_logger] [warning] 279.842 : Trade not successfull
-[2017-10-06 16:28:26.288] [basic_logger] [warning] 281.176 : Trade not successfull
-[2017-10-06 16:28:26.288] [basic_logger] [warning] 281.325 : Trade not successfull
-[2017-10-06 16:28:26.289] [basic_logger] [warning] 281.628 : Trade not successfull
-[2017-10-06 16:28:26.289] [basic_logger] [warning] 281.704 : Trade not successfull
-[2017-10-06 16:28:26.291] [basic_logger] [warning] 282.299 : Trade not successfull
-[2017-10-06 16:28:26.291] [basic_logger] [warning] 282.404 : Trade not successfull
-[2017-10-06 16:28:26.291] [basic_logger] [warning] 282.551 : Trade not successfull
-[2017-10-06 16:28:26.300] [basic_logger] [warning] 287.292 : Trade not successfull
-[2017-10-06 16:28:26.312] [basic_logger] [warning] 289.57 : Trade not successfull
-[2017-10-06 16:28:26.316] [basic_logger] [warning] 290.813 : Trade not successfull
-[2017-10-06 16:28:26.316] [basic_logger] [warning] 290.836 : Trade not successfull
-[2017-10-06 16:28:26.316] [basic_logger] [warning] 290.884 : Trade not successfull
-[2017-10-06 16:28:26.320] [basic_logger] [warning] 290.924 : Trade not successfull
-[2017-10-06 16:28:26.324] [basic_logger] [warning] 291.159 : Trade not successfull
-[2017-10-06 16:28:26.324] [basic_logger] [warning] 291.349 : Trade not successfull
-[2017-10-06 16:28:26.324] [basic_logger] [warning] 291.475 : Trade not successfull
-[2017-10-06 16:28:26.325] [basic_logger] [warning] 291.494 : Trade not successfull
-[2017-10-06 16:28:26.325] [basic_logger] [warning] 291.793 : Trade not successfull
-[2017-10-06 16:28:26.325] [basic_logger] [warning] 291.899 : Trade not successfull
-[2017-10-06 16:28:26.328] [basic_logger] [warning] 292.015 : Trade not successfull
-[2017-10-06 16:28:26.328] [basic_logger] [warning] 292.216 : Trade not successfull
-[2017-10-06 16:28:26.328] [basic_logger] [warning] 292.217 : Trade not successfull
-[2017-10-06 16:28:26.329] [basic_logger] [warning] 292.258 : Trade not successfull
-[2017-10-06 16:28:26.331] [basic_logger] [warning] 293.672 : Trade not successfull
-[2017-10-06 16:28:26.331] [basic_logger] [warning] 293.888 : Trade not successfull
-[2017-10-06 16:28:26.331] [basic_logger] [warning] 293.89 : Trade not successfull
-[2017-10-06 16:28:26.331] [basic_logger] [warning] 293.916 : Trade not successfull
-[2017-10-06 16:28:26.333] [basic_logger] [warning] 294.579 : Trade not successfull
-[2017-10-06 16:28:26.345] [basic_logger] [warning] 297.585 : Cancellation not - order book empty
-[2017-10-06 16:28:26.347] [basic_logger] [warning] 298.149 : Trade not successfull
-[2017-10-06 16:28:26.347] [basic_logger] [warning] 298.3 : Trade not successfull
-[2017-10-06 16:28:26.347] [basic_logger] [warning] 298.449 : Trade not successfull
-[2017-10-06 16:28:26.347] [basic_logger] [warning] 298.55 : Trade not successfull
-[2017-10-06 16:28:26.348] [basic_logger] [warning] 298.863 : Trade not successfull
-[2017-10-06 16:28:26.350] [basic_logger] [warning] 300.224 : Cancellation not - order book empty
-[2017-10-06 16:28:26.350] [basic_logger] [warning] 300.263 : Trade not successfull
-[2017-10-06 16:28:26.350] [basic_logger] [warning] 300.378 : Trade not successfull
-[2017-10-06 16:28:26.351] [basic_logger] [warning] 300.637 : Trade not successfull
-[2017-10-06 16:28:26.352] [basic_logger] [warning] 300.719 : Trade not successfull
-[2017-10-06 16:28:26.352] [basic_logger] [warning] 300.734 : Trade not successfull
-[2017-10-06 16:28:26.352] [basic_logger] [warning] 300.748 : Trade not successfull
-[2017-10-06 16:28:26.396] [basic_logger] [warning] 326.954 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:26.398] [basic_logger] [warning] 327.639 : Trade not successfull
-[2017-10-06 16:28:26.398] [basic_logger] [warning] 327.703 : Trade not successfull
-[2017-10-06 16:28:26.400] [basic_logger] [warning] 329.653 : Trade not successfull
-[2017-10-06 16:28:26.408] [basic_logger] [warning] 333.209 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:26.985] [basic_logger] [warning] 704.884 : Trade not successfull
-[2017-10-06 16:28:26.987] [basic_logger] [warning] 705.639 : Trade not successfull
-[2017-10-06 16:28:26.987] [basic_logger] [warning] 705.683 : Trade not successfull
-[2017-10-06 16:28:26.987] [basic_logger] [warning] 705.781 : Trade not successfull
-[2017-10-06 16:28:26.988] [basic_logger] [warning] 705.996 : Trade not successfull
-[2017-10-06 16:28:26.988] [basic_logger] [warning] 706.056 : Trade not successfull
-[2017-10-06 16:28:26.988] [basic_logger] [warning] 706.078 : Cancellation not - order book empty
-[2017-10-06 16:28:26.989] [basic_logger] [warning] 706.603 : Trade not successfull
-[2017-10-06 16:28:27.106] [basic_logger] [warning] 793.608 : Trade not successfull
-[2017-10-06 16:28:27.107] [basic_logger] [warning] 794.232 : Trade not successfull
-[2017-10-06 16:28:27.108] [basic_logger] [warning] 794.348 : Trade not successfull
-[2017-10-06 16:28:27.214] [basic_logger] [warning] 866.744 : Cancellation not - order book empty
-[2017-10-06 16:28:27.219] [basic_logger] [warning] 869.021 : Cancellation not - order book empty
-[2017-10-06 16:28:27.220] [basic_logger] [warning] 869.662 : Trade not successfull
-[2017-10-06 16:28:27.222] [basic_logger] [warning] 870.54 : Cancellation not - order book empty
-[2017-10-06 16:28:27.222] [basic_logger] [warning] 870.988 : Trade not successfull
-[2017-10-06 16:28:27.223] [basic_logger] [warning] 871.636 : Trade not successfull
-[2017-10-06 16:28:27.224] [basic_logger] [warning] 871.726 : Trade not successfull
-[2017-10-06 16:28:27.224] [basic_logger] [warning] 871.813 : Trade not successfull
-[2017-10-06 16:28:27.225] [basic_logger] [warning] 872.44 : Trade not successfull
-[2017-10-06 16:28:27.226] [basic_logger] [warning] 873.198 : Cancellation not - order book empty
-[2017-10-06 16:28:27.240] [basic_logger] [warning] 883.85 : Cancellation not - order book empty
-[2017-10-06 16:28:27.242] [basic_logger] [warning] 885.474 : Cancellation not - order book empty
-[2017-10-06 16:28:27.245] [basic_logger] [warning] 887.597 : Cancellation not - order book empty
-[2017-10-06 16:28:27.470] [basic_logger] [warning] 1023.49 : Cancellation not - order book empty
-[2017-10-06 16:28:27.476] [basic_logger] [warning] 1027.19 : Cancellation not - order book empty
-[2017-10-06 16:28:27.476] [basic_logger] [warning] 1027.64 : Cancellation not - order book empty
-[2017-10-06 16:28:27.534] [basic_logger] [warning] 1071.96 : Cancellation not - order book empty
-[2017-10-06 16:28:27.535] [basic_logger] [warning] 1072.21 : Cancellation not - order book empty
-[2017-10-06 16:28:27.536] [basic_logger] [warning] 1072.67 : Trade not successfull
-[2017-10-06 16:28:27.536] [basic_logger] [warning] 1072.79 : Trade not successfull
-[2017-10-06 16:28:27.536] [basic_logger] [warning] 1072.79 : Trade not successfull
-[2017-10-06 16:28:27.536] [basic_logger] [warning] 1072.91 : Cancellation not - order book empty
-[2017-10-06 16:28:27.536] [basic_logger] [warning] 1072.91 : Trade not successfull
-[2017-10-06 16:28:27.537] [basic_logger] [warning] 1072.95 : Trade not successfull
-[2017-10-06 16:28:27.538] [basic_logger] [warning] 1073.4 : Trade not successfull
-[2017-10-06 16:28:27.538] [basic_logger] [warning] 1073.79 : Trade not successfull
-[2017-10-06 16:28:27.539] [basic_logger] [warning] 1074.14 : Trade not successfull
-[2017-10-06 16:28:27.540] [basic_logger] [warning] 1075.76 : Trade not successfull
-[2017-10-06 16:28:27.541] [basic_logger] [warning] 1075.77 : Trade not successfull
-[2017-10-06 16:28:27.541] [basic_logger] [warning] 1075.88 : Trade not successfull
-[2017-10-06 16:28:27.543] [basic_logger] [warning] 1076.96 : Trade not successfull
-[2017-10-06 16:28:27.561] [basic_logger] [warning] 1089.69 : Cancellation not - order book empty
-[2017-10-06 16:28:27.582] [basic_logger] [warning] 1103.52 : Trade not successfull
-[2017-10-06 16:28:27.583] [basic_logger] [warning] 1104.1 : Trade not successfull
-[2017-10-06 16:28:27.584] [basic_logger] [warning] 1104.22 : Trade not successfull
-[2017-10-06 16:28:27.584] [basic_logger] [warning] 1104.38 : Trade not successfull
-[2017-10-06 16:28:27.585] [basic_logger] [warning] 1105.63 : Trade not successfull
-[2017-10-06 16:28:27.585] [basic_logger] [warning] 1105.71 : Trade not successfull
-[2017-10-06 16:28:27.586] [basic_logger] [warning] 1105.87 : Cancellation not - order book empty
-[2017-10-06 16:28:27.587] [basic_logger] [warning] 1106.08 : Trade not successfull
-[2017-10-06 16:28:27.587] [basic_logger] [warning] 1106.66 : Trade not successfull
-[2017-10-06 16:28:27.588] [basic_logger] [warning] 1106.93 : Trade not successfull
-[2017-10-06 16:28:27.592] [basic_logger] [warning] 1109.6 : Cancellation not - order book empty
-[2017-10-06 16:28:27.594] [basic_logger] [warning] 1111.13 : Trade not successfull
-[2017-10-06 16:28:27.596] [basic_logger] [warning] 1113.51 : Cancellation not - order book empty
-[2017-10-06 16:28:27.597] [basic_logger] [warning] 1114.55 : Cancellation not - order book empty
-[2017-10-06 16:28:27.598] [basic_logger] [warning] 1114.75 : Trade not successfull
-[2017-10-06 16:28:27.598] [basic_logger] [warning] 1114.91 : Trade not successfull
-[2017-10-06 16:28:27.599] [basic_logger] [warning] 1116.2 : Trade not successfull
-[2017-10-06 16:28:27.600] [basic_logger] [warning] 1116.24 : Trade not successfull
-[2017-10-06 16:28:27.600] [basic_logger] [warning] 1116.31 : Trade not successfull
-[2017-10-06 16:28:27.600] [basic_logger] [warning] 1116.47 : Trade not successfull
-[2017-10-06 16:28:27.600] [basic_logger] [warning] 1116.69 : Trade not successfull
-[2017-10-06 16:28:27.600] [basic_logger] [warning] 1116.72 : Trade not successfull
-[2017-10-06 16:28:27.600] [basic_logger] [warning] 1116.84 : Trade not successfull
-[2017-10-06 16:28:27.791] [basic_logger] [warning] 1251.96 : Trade not successfull
-[2017-10-06 16:28:27.791] [basic_logger] [warning] 1251.96 : Trade not successfull
-[2017-10-06 16:28:27.791] [basic_logger] [warning] 1252.1 : Trade not successfull
-[2017-10-06 16:28:27.792] [basic_logger] [warning] 1252.26 : Trade not successfull
-[2017-10-06 16:28:27.792] [basic_logger] [warning] 1252.27 : Trade not successfull
-[2017-10-06 16:28:27.792] [basic_logger] [warning] 1252.36 : Trade not successfull
-[2017-10-06 16:28:27.792] [basic_logger] [warning] 1252.37 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:27.794] [basic_logger] [warning] 1253.56 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:27.795] [basic_logger] [warning] 1254.04 : Trade not successfull
-[2017-10-06 16:28:27.801] [basic_logger] [warning] 1259.14 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:27.805] [basic_logger] [warning] 1262.2 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:27.811] [basic_logger] [warning] 1267.48 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:27.832] [basic_logger] [warning] 1282.93 : Trade not successfull
-[2017-10-06 16:28:27.833] [basic_logger] [warning] 1283.31 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:27.833] [basic_logger] [warning] 1283.38 : Trade not successfull
-[2017-10-06 16:28:27.833] [basic_logger] [warning] 1283.66 : Trade not successfull
-[2017-10-06 16:28:27.837] [basic_logger] [warning] 1285.27 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:27.842] [basic_logger] [warning] 1288.56 : Trade not successfull
-[2017-10-06 16:28:27.842] [basic_logger] [warning] 1288.6 : Trade not successfull
-[2017-10-06 16:28:27.842] [basic_logger] [warning] 1288.61 : Trade not successfull
-[2017-10-06 16:28:27.842] [basic_logger] [warning] 1288.78 : Trade not successfull
-[2017-10-06 16:28:27.843] [basic_logger] [warning] 1288.79 : Trade not successfull
-[2017-10-06 16:28:27.844] [basic_logger] [warning] 1289.16 : Trade not successfull
-[2017-10-06 16:28:27.844] [basic_logger] [warning] 1289.2 : Trade not successfull
-[2017-10-06 16:28:27.844] [basic_logger] [warning] 1289.3 : Trade not successfull
-[2017-10-06 16:28:27.851] [basic_logger] [warning] 1294.67 : Trade not successfull
-[2017-10-06 16:28:27.851] [basic_logger] [warning] 1294.76 : Trade not successfull
-[2017-10-06 16:28:27.851] [basic_logger] [warning] 1294.76 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:27.851] [basic_logger] [warning] 1294.81 : Trade not successfull
-[2017-10-06 16:28:27.851] [basic_logger] [warning] 1294.95 : Trade not successfull
-[2017-10-06 16:28:27.854] [basic_logger] [warning] 1295.1 : Trade not successfull
-[2017-10-06 16:28:27.855] [basic_logger] [warning] 1296.42 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:27.857] [basic_logger] [warning] 1297.51 : Trade not successfull
-[2017-10-06 16:28:27.858] [basic_logger] [warning] 1298.01 : Trade not successfull
-[2017-10-06 16:28:27.860] [basic_logger] [warning] 1299.23 : Trade not successfull
-[2017-10-06 16:28:27.860] [basic_logger] [warning] 1299.43 : Trade not successfull
-[2017-10-06 16:28:27.860] [basic_logger] [warning] 1299.47 : Trade not successfull
-[2017-10-06 16:28:27.862] [basic_logger] [warning] 1300.47 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:27.877] [basic_logger] [warning] 1311.6 : Cancellation not successfull - order book empty
-[2017-10-06 16:28:40.623] [basic_logger] [warning] 7474.68 : Cancellation not - order book empty
-[2017-10-06 16:28:40.639] [basic_logger] [warning] 7484.83 : Cancellation not - order book empty
-[2017-10-06 16:28:40.656] [basic_logger] [warning] 7495.41 : Cancellation not - order book empty
-[2017-10-06 16:28:40.723] [basic_logger] [warning] 7540.37 : Cancellation not - order book empty
-[2017-10-06 16:28:40.725] [basic_logger] [warning] 7542.49 : Cancellation not - order book empty
-[2017-10-06 16:28:40.726] [basic_logger] [warning] 7542.64 : Trade not successfull
-[2017-10-06 16:28:40.727] [basic_logger] [warning] 7543.05 : Cancellation not - order book empty
-[2017-10-06 16:28:40.727] [basic_logger] [warning] 7543.3 : Trade not successfull
-[2017-10-06 16:28:40.736] [basic_logger] [warning] 7547.83 : Trade not successfull
-[2017-10-06 16:28:40.738] [basic_logger] [warning] 7548.15 : Trade not successfull
-[2017-10-06 16:28:40.738] [basic_logger] [warning] 7548.23 : Cancellation not - order book empty
-[2017-10-06 16:28:40.738] [basic_logger] [warning] 7548.33 : Cancellation not - order book empty
-[2017-10-06 16:28:40.739] [basic_logger] [warning] 7548.52 : Trade not successfull
-[2017-10-06 16:28:40.739] [basic_logger] [warning] 7548.54 : Trade not successfull
-[2017-10-06 16:28:40.739] [basic_logger] [warning] 7548.63 : Cancellation not - order book empty
-[2017-10-06 16:28:40.739] [basic_logger] [warning] 7548.63 : Cancellation not - order book empty
-[2017-10-06 16:28:40.739] [basic_logger] [warning] 7548.79 : Trade not successfull
-[2017-10-06 16:28:40.740] [basic_logger] [warning] 7548.94 : Trade not successfull
-[2017-10-06 16:28:40.743] [basic_logger] [warning] 7551.03 : Trade not successfull
-[2017-10-06 16:28:40.743] [basic_logger] [warning] 7551.33 : Cancellation not - order book empty
-[2017-10-06 16:28:40.749] [basic_logger] [warning] 7553.81 : Trade not successfull
-[2017-10-06 16:28:40.749] [basic_logger] [warning] 7553.98 : Trade not successfull
-[2017-10-06 16:28:40.750] [basic_logger] [warning] 7554.23 : Cancellation not - order book empty
-[2017-10-06 16:28:40.751] [basic_logger] [warning] 7554.64 : Trade not successfull
-[2017-10-06 16:28:40.753] [basic_logger] [warning] 7556.13 : Trade not successfull
-[2017-10-06 16:28:40.760] [basic_logger] [warning] 7561.56 : Trade not successfull
-[2017-10-06 16:28:40.760] [basic_logger] [warning] 7561.88 : Trade not successfull
-[2017-10-06 16:28:40.760] [basic_logger] [warning] 7561.9 : Trade not successfull
-[2017-10-06 16:28:40.760] [basic_logger] [warning] 7561.95 : Trade not successfull
-[2017-10-06 16:28:40.761] [basic_logger] [warning] 7562.2 : Cancellation not - order book empty
-[2017-10-06 16:28:40.761] [basic_logger] [warning] 7562.28 : Cancellation not - order book empty
-[2017-10-06 16:28:40.782] [basic_logger] [warning] 7575.02 : Cancellation not - order book empty
-[2017-10-06 16:28:40.802] [basic_logger] [warning] 7587.54 : Cancellation not - order book empty
-[2017-10-06 16:28:40.984] [basic_logger] [warning] 7714.53 : Cancellation not - order book empty
-[2017-10-06 16:28:40.990] [basic_logger] [warning] 7719.33 : Cancellation not - order book empty
-[2017-10-06 16:28:40.991] [basic_logger] [warning] 7719.92 : Cancellation not - order book empty
-[2017-10-06 16:28:41.726] [basic_logger] [warning] 8184.24 : Cancellation not - order book empty
-[2017-10-06 16:28:41.736] [basic_logger] [warning] 8189.98 : Trade not successfull
-[2017-10-06 16:28:41.741] [basic_logger] [warning] 8193.28 : Cancellation not - order book empty
-[2017-10-06 16:28:41.751] [basic_logger] [warning] 8199.17 : Cancellation not - order book empty
-[2017-10-06 16:28:41.751] [basic_logger] [warning] 8199.78 : Cancellation not - order book empty
-[2017-10-06 16:28:41.753] [basic_logger] [warning] 8201.11 : Cancellation not - order book empty
-[2017-10-06 16:28:41.753] [basic_logger] [warning] 8201.26 : Trade not successfull
-[2017-10-06 16:28:41.753] [basic_logger] [warning] 8201.26 : Trade not successfull
-[2017-10-06 16:28:41.755] [basic_logger] [warning] 8202.6 : Trade not successfull
-[2017-10-06 16:28:41.755] [basic_logger] [warning] 8202.66 : Trade not successfull
-[2017-10-06 16:28:41.800] [basic_logger] [warning] 8234.1 : Trade not successfull
-[2017-10-06 16:28:41.801] [basic_logger] [warning] 8234.42 : Trade not successfull
-[2017-10-06 16:28:41.801] [basic_logger] [warning] 8234.65 : Trade not successfull
-[2017-10-06 16:28:41.801] [basic_logger] [warning] 8234.71 : Trade not successfull
-[2017-10-06 16:28:41.801] [basic_logger] [warning] 8234.76 : Trade not successfull
-[2017-10-06 16:28:41.801] [basic_logger] [warning] 8234.85 : Trade not successfull
-[2017-10-06 16:28:41.801] [basic_logger] [warning] 8234.91 : Trade not successfull
-[2017-10-06 16:28:41.803] [basic_logger] [warning] 8236.04 : Trade not successfull
-[2017-10-06 16:28:41.831] [basic_logger] [warning] 8254.99 : Cancellation not - order book empty
-[2017-10-06 16:28:41.832] [basic_logger] [warning] 8255.15 : Trade not successfull
-[2017-10-06 16:28:41.832] [basic_logger] [warning] 8255.24 : Trade not successfull
-[2017-10-06 16:28:41.833] [basic_logger] [warning] 8256 : Trade not successfull
-[2017-10-06 16:28:41.834] [basic_logger] [warning] 8256.31 : Trade not successfull
-[2017-10-06 16:28:41.835] [basic_logger] [warning] 8257.27 : Cancellation not - order book empty
-[2017-10-06 16:28:41.846] [basic_logger] [warning] 8265.36 : Trade not successfull
-[2017-10-06 16:28:42.022] [basic_logger] [warning] 8384.36 : Cancellation not - order book empty
-[2017-10-06 16:28:42.083] [basic_logger] [warning] 8426.02 : Cancellation not - order book empty
-[2017-10-06 16:28:42.115] [basic_logger] [warning] 8446.7 : Cancellation not - order book empty
-[2017-10-06 16:28:42.116] [basic_logger] [warning] 8447.3 : Cancellation not - order book empty
-[2017-10-06 16:28:42.116] [basic_logger] [warning] 8447.67 : Cancellation not - order book empty
-[2017-10-06 16:28:42.118] [basic_logger] [warning] 8448.97 : Cancellation not - order book empty
-[2017-10-06 16:28:42.121] [basic_logger] [warning] 8451.03 : Cancellation not - order book empty
-[2017-10-06 16:28:42.124] [basic_logger] [warning] 8453.63 : Cancellation not - order book empty
-[2017-10-06 16:28:42.153] [basic_logger] [warning] 8472.56 : Cancellation not - order book empty
-[2017-10-06 16:28:42.160] [basic_logger] [warning] 8476.84 : Trade not successfull
-[2017-10-06 16:28:42.161] [basic_logger] [warning] 8477.43 : Trade not successfull
-[2017-10-06 16:28:42.162] [basic_logger] [warning] 8478.49 : Trade not successfull
-[2017-10-06 16:28:42.162] [basic_logger] [warning] 8478.51 : Trade not successfull
-[2017-10-06 16:28:42.162] [basic_logger] [warning] 8478.87 : Trade not successfull
-[2017-10-06 16:28:42.164] [basic_logger] [warning] 8479.93 : Cancellation not - order book empty
-[2017-10-06 16:28:42.165] [basic_logger] [warning] 8480.33 : Trade not successfull
-[2017-10-06 16:28:42.165] [basic_logger] [warning] 8480.45 : Trade not successfull
-[2017-10-06 16:28:42.166] [basic_logger] [warning] 8480.56 : Trade not successfull
-[2017-10-06 16:28:42.166] [basic_logger] [warning] 8480.72 : Trade not successfull
+[2017-10-15 16:54:07.616] [basic_logger] [warning] 1.07533 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:07.948] [basic_logger] [warning] 6.69769 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:07.966] [basic_logger] [warning] 7.20112 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:07.970] [basic_logger] [warning] 7.24765 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:07.974] [basic_logger] [warning] 7.30344 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:07.975] [basic_logger] [warning] 7.30661 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:07.979] [basic_logger] [warning] 7.33781 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:07.982] [basic_logger] [warning] 7.37286 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:08.068] [basic_logger] [warning] 9.0191 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:08.298] [basic_logger] [warning] 13.6601 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:08.304] [basic_logger] [warning] 13.7276 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:08.427] [basic_logger] [warning] 15.7261 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:08.707] [basic_logger] [warning] 21.2933 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:08.715] [basic_logger] [warning] 21.3866 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:08.772] [basic_logger] [warning] 22.5769 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:08.776] [basic_logger] [warning] 22.6553 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:08.782] [basic_logger] [warning] 22.7498 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:08.784] [basic_logger] [warning] 22.8223 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:08.839] [basic_logger] [warning] 23.9787 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:09.456] [basic_logger] [warning] 35.868 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:09.485] [basic_logger] [warning] 36.6369 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:09.488] [basic_logger] [warning] 36.6802 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:09.516] [basic_logger] [warning] 37.1953 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:09.536] [basic_logger] [warning] 37.5707 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:09.569] [basic_logger] [warning] 38.1533 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:09.717] [basic_logger] [warning] 40.5085 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:09.763] [basic_logger] [warning] 41.3494 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:09.776] [basic_logger] [warning] 41.5478 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:10.195] [basic_logger] [warning] 48.7958 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:10.273] [basic_logger] [warning] 50.1362 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:10.282] [basic_logger] [warning] 50.2617 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:10.567] [basic_logger] [warning] 54.9805 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:10.581] [basic_logger] [warning] 55.2265 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:10.583] [basic_logger] [warning] 55.3085 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:10.599] [basic_logger] [warning] 55.5917 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:10.605] [basic_logger] [warning] 55.7201 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:10.634] [basic_logger] [warning] 56.2247 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:10.637] [basic_logger] [warning] 56.2566 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:10.927] [basic_logger] [warning] 61.0434 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:10.988] [basic_logger] [warning] 62.0179 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:10.990] [basic_logger] [warning] 62.1153 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:10.993] [basic_logger] [warning] 62.1401 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.013] [basic_logger] [warning] 62.5249 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.027] [basic_logger] [warning] 63.0645 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.030] [basic_logger] [warning] 63.106 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.063] [basic_logger] [warning] 63.855 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.067] [basic_logger] [warning] 63.8727 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.069] [basic_logger] [warning] 63.9049 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.069] [basic_logger] [warning] 63.9155 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.090] [basic_logger] [warning] 64.3513 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.091] [basic_logger] [warning] 64.3534 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.096] [basic_logger] [warning] 64.4107 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.149] [basic_logger] [warning] 65.3895 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.157] [basic_logger] [warning] 65.5821 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.203] [basic_logger] [warning] 66.6077 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.203] [basic_logger] [warning] 66.6095 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.204] [basic_logger] [warning] 66.6282 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.551] [basic_logger] [warning] 72.4748 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.793] [basic_logger] [warning] 76.5713 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:11.799] [basic_logger] [warning] 76.6682 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:12.877] [basic_logger] [warning] 93.1815 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:13.598] [basic_logger] [warning] 104.76 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:13.598] [basic_logger] [warning] 104.765 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:13.603] [basic_logger] [warning] 104.895 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:13.614] [basic_logger] [warning] 105.042 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:13.740] [basic_logger] [warning] 107.019 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:13.796] [basic_logger] [warning] 107.961 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:13.797] [basic_logger] [warning] 107.967 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:13.799] [basic_logger] [warning] 107.996 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:13.806] [basic_logger] [warning] 108.143 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:13.952] [basic_logger] [warning] 110.429 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:13.953] [basic_logger] [warning] 110.443 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:13.965] [basic_logger] [warning] 110.627 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:14.289] [basic_logger] [warning] 116.355 : Cancellation not successfull - order book empty
+[2017-10-15 16:54:14.308] [basic_logger] [warning] 116.59

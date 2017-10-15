@@ -33,6 +33,12 @@
     <ClInclude Include="Client.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Flow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NonConstMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
