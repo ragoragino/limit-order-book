@@ -4,6 +4,7 @@
 #include "Client.h"
 #include "Book.h"
 #include "NonConstMap.h"
+#include "Additional.h"
 
 #include <iostream>
 #include <map>
@@ -14,57 +15,7 @@
 #include <stdlib.h>
 
 #include "spdlog/spdlog.h" // logging
-// #include "GNUplot/gnuplot-iostream.h"
 
-
-// Faster implementation of sort algorithm for appending an element to an already sorted std::deque
-template<class T>
-void deque_sort(std::deque<T>& in_deque, const T& i, bool (*func)(const T& a, const T& b))
-{
-	int upper_index = (int)in_deque.size();
-	int lower_index = 0;
-	int difference = (int)((upper_index - lower_index) / 2);
-
-	if (upper_index == 0)
-	{
-		in_deque.insert(in_deque.begin(), i);
-		return;
-	}
-
-	while (difference >= 1)
-	{
-		if (func(in_deque[lower_index + difference], i))
-		{
-			lower_index += difference;
-		}
-		else if (func(i, in_deque[lower_index + difference]))
-		{
-			upper_index = lower_index + difference;
-		}
-		else
-		{
-			in_deque.insert(in_deque.begin() + lower_index + difference, i);
-			return;
-		}
-
-		difference = (int)((upper_index - lower_index) / 2);
-	}
-
-	// for the case of size = 1, there needs to be again an if-else test
-	if (func(in_deque[lower_index + difference], i))
-	{
-		in_deque.insert(in_deque.begin() + lower_index + difference + 1, i);
-	}
-	else
-	{
-		in_deque.insert(in_deque.begin() + lower_index + difference, i);
-	}
-}
-
-bool compare(const OrderWrapper& a, const OrderWrapper& b)
-{
-	return a.client_order.time < b.client_order.time ? true : false;
-}
 
 const int limit{ 5 }; // initial length of visible part of LOB
 const double bid_inf_size{ 10 };
@@ -118,8 +69,14 @@ int main()
 		side = (int)(client_orders[0].client_order.type_identifier / 3);
 		client_id = client_orders[0].client_id;
 		client_index = client_orders[0].client_index;
-		lob[side]->Act(client_orders[0].client_order, client_id);
+		lob[side]->Act(client_orders[0].client_order, client_id, lob[side ? 0 : 1]);
 		client_orders.pop_front();
+
+		for (int i = 0; i != limit; ++i)
+		{
+			// std::cout << "BID SIZE " << i << " " << Book::bid_sizes[i] << std::endl;
+			// std::cout << "ASK SIZE " << i << " " << Book::ask_sizes[i] << std::endl;
+		}
 
 		tmp_order = clients[client_index]->Query(Book::bid_sizes, Book::ask_sizes);
 
@@ -135,11 +92,3 @@ int main()
 
 	return 0;
 }
-
-
-
-
-/*
-TASKS:
-	2. FINISH POISSON a HAWKES ADJUSTMENT
-*/

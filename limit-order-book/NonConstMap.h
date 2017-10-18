@@ -9,12 +9,11 @@ extern const int limit;
 template<typename T>
 class nonconst_map
 {
-	// typedef key_type decltype(default_spread);
-
 public:
 	nonconst_map()
 	{
 		_values = new T*[limit];
+		_backup = new T*[limit];
 
 		for (int i = 0; i != limit; ++i)
 		{
@@ -25,13 +24,13 @@ public:
 	nonconst_map(const nonconst_map& rhs) :
 	{
 		_values = new T*[limit];
+		_backup = new T*[limit];
 		std::copy(rhs, rhs + limit, _values);
 	}
 
 	friend void swap(nonconst_map& first, nonconst_map& second)
 	{
 		std::swap(first._values, second._values); 
-		std::swap(first._inf_size, second._inf_size); // T must meet the requirements of MoveAssignable and MoveConstructible.
 	}
 
 	nonconst_map& operator=(nonconst_map other)
@@ -49,21 +48,18 @@ public:
 		}
 
 		delete[] _values;
+		delete[] _backup;
+
 	}
 
 	class iterator
 	{
-		friend void swap(iterator& a, iterator& b)
-		{
-			// ???
-		}
-
 	public:
 		iterator(T** ptr) : _ptr(ptr), first{ 0.0 } { }
 		iterator operator++() { _ptr++; first += default_spread; return *this; }
 		iterator operator++(int junk) { iterator i = *this; _ptr++; first += default_spread; return i; }
-		T& operator*() { return *_ptr; }
-		T* operator->() { return _ptr; }
+		T& operator*() { return **_ptr; }
+		T* operator->() { return *_ptr; }
 		bool operator==(const iterator& rhs) { return _ptr == rhs._ptr; }
 		bool operator!=(const iterator& rhs) { return _ptr != rhs._ptr; }
 
@@ -90,12 +86,26 @@ public:
 		return *(_values[key]); 
 	}
 
+	T& operator[](int in_key)
+	{
+		assert(in_key < limit);
+
+		return *(_values[in_key]);
+	}
+
 	const T& operator[](double in_key) const
 	{
 		int key = (int)(in_key / default_spread);
 		assert(index < limit);
 
 		return *(_values[key]);
+	}
+
+	const T& operator[](int in_key) const
+	{
+		assert(in_key < limit);
+
+		return *(_values[in_key]);
 	}
 
 	iterator begin()
@@ -108,11 +118,45 @@ public:
 		return iterator(_values + limit);
 	}
 
+	void move_right(int shift)
+	{
+		for (int i = 0; i != shift; ++i)
+		{
+			_backup[i] = _values[i]->clean();
+		}
+
+		for (int i = 0; i != limit - shift; ++i)
+		{
+			_values[i] = _values[i + shift];
+		}
+
+		for (int i = 0; i != shift; ++i)
+		{
+			_values[limit - i - 1] = _backup[i];
+		}
+
+	}
+
+	void move_left(int shift)
+	{
+		for (int i = 0; i != shift; ++i)
+		{
+			_backup[i] = _values[limit - i - 1]->clean();
+		}
+
+		for (int i = limit - shift - 1; i >= 0; --i)
+		{
+			_values[i + shift] = _values[i];
+		}
+
+		for (int i = 0; i != shift; ++i)
+		{
+			_values[i] = _backup[i];
+		}
+	}
 
 
 private:
 	T **_values;
-	T *_inf_size; // dokoncit
+	T ** _backup;
 };
-
-// premysliet move function

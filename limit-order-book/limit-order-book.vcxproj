@@ -140,15 +140,16 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Additional.h" />
     <ClInclude Include="Client.h" />
-    <ClInclude Include="Flow.h" />
     <ClInclude Include="NonConstMap.h" />
-    <ClInclude Include="VectorAllocator.h" />
     <ClInclude Include="Book.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Book.cpp" />
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="limit-order-book.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp">
