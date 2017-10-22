@@ -6,9 +6,9 @@
 template<class T>
 void deque_sort(std::deque<T>& in_deque, const T& i, bool(*func)(const T& a, const T& b))
 {
-	int upper_index = (int)in_deque.size();
+	int upper_index = static_cast<int>(in_deque.size());
 	int lower_index = 0;
-	int difference = (int)((upper_index - lower_index) / 2);
+	int difference = static_cast<int>((upper_index - lower_index) / 2);
 
 	if (upper_index == 0)
 	{
@@ -32,7 +32,7 @@ void deque_sort(std::deque<T>& in_deque, const T& i, bool(*func)(const T& a, con
 			return;
 		}
 
-		difference = (int)((upper_index - lower_index) / 2);
+		difference = static_cast<int>((upper_index - lower_index) / 2);
 	}
 
 	// for the case of size = 1, there needs to be again an if-else test

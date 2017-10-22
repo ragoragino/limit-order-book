@@ -4,6 +4,8 @@
 #include <deque>
 #include "Client.h"
 
+#include <iostream>
+
 inline double decimal_round(double x, int points);
 extern const double default_spread; // Default spread
 

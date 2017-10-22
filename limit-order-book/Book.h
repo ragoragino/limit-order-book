@@ -8,8 +8,8 @@
 #include <iostream>
 
 extern const int limit;
-extern const double bid_inf_size;
-extern const double ask_inf_size;
+extern const double bid_inf_size; // todo -> Do I need it?
+extern const double ask_inf_size; // todo -> Do I need it?
 inline double decimal_round(double x, int points);
 
 class Book
@@ -28,16 +28,16 @@ public:
 
 	virtual void Act(ClientOrder& order, int exchange_id, Book *other_side) = 0;
 
-	virtual double nbbo(Book *other_side) = 0;
+	virtual double nbbo(Book *other_side, int in_client_id) = 0;
 
 	virtual void move_right(int shift) = 0;
 
 	virtual void move_left(int shift) = 0;
 
-	virtual double get_size(int index) = 0;
+	virtual double get_size(int index, int in_client_id) = 0;
 
 	static std::vector<double> nbbo_var;
-	static std::deque<double> bid_sizes, ask_sizes;
+	static std::map< int, std::deque<double> > bid_sizes, ask_sizes;
 
 protected:
 	std::shared_ptr<spdlog::logger> _logger_device;
@@ -104,12 +104,15 @@ public:
 		return this;
 	}
 
-	double size()
+	double size(int client_id)
 	{
 		double tick_size{ 0.0 };
 		for (std::deque<Order>::const_iterator it = _tick.begin(); it != _tick.end(); ++it)
 		{
-			tick_size += it->_size;
+			if (it->_client_id == client_id)
+			{
+				tick_size += it->_size;
+			}
 		}
 
 		return tick_size;
@@ -177,7 +180,7 @@ public:
 
 	void Act(ClientOrder& order, int exchange_id, Book *other_side);
 
-	double nbbo(Book *other_side);
+	double nbbo(Book *other_side, int in_client_id);
 
 	void move_right(int shift)
 	{
@@ -189,9 +192,9 @@ public:
 		_side.move_left(shift);
 	}
 
-	double get_size(int index)
+	double get_size(int index, int client_id)
 	{
-		return _side[index].size();
+		return _side[index].size(client_id);
 	}
 
 private:
@@ -219,7 +222,7 @@ public:
 
 	void Act(ClientOrder& order, int exchange_id, Book *other_side);
 
-	double nbbo(Book *other_side);
+	double nbbo(Book *other_side, int in_client_id);
 
 	void move_right(int shift)
 	{
@@ -231,9 +234,9 @@ public:
 		_side.move_left(shift);
 	}
 
-	double get_size(int index)
+	double get_size(int index, int client_id)
 	{
-		return _side[index].size();
+		return _side[index].size(client_id);
 	}
 
 private:

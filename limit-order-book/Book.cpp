@@ -61,7 +61,7 @@ bool Tick::cancel(const ClientOrder& client_order, int client_id)
 }
 
 
-double Bid::nbbo(Book *other_side)
+double Bid::nbbo(Book *other_side, int in_client_id)
 {
 	for (nonconst_map<Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
 	{
@@ -76,23 +76,23 @@ double Bid::nbbo(Book *other_side)
 			// Update the opposite side
 			if (nbbo_var[0] > nbbo_old) // Quote
 			{
-				int distance = (int)((nbbo_var[0] - nbbo_old) / default_spread);
+				int distance = static_cast<int>((nbbo_var[0] - nbbo_old) / default_spread);
 				other_side->move_left(distance);
 
 				for (int i = 0; i != limit; ++i)
 				{
-					ask_sizes[i] = other_side->get_size(i);
+					ask_sizes[in_client_id][i] = other_side->get_size(i, in_client_id);
 				}
 			}
 			else if (nbbo_var[0] < nbbo_old) // Trade or Cancel
 			{
-				int distance = (int)((nbbo_old - nbbo_var[0]) / default_spread);
+				int distance = static_cast<int>((nbbo_old - nbbo_var[0]) / default_spread);
 
 				other_side->move_right(distance);
 
 				for (int i = 0; i != limit; ++i)
 				{
-					ask_sizes[i] = other_side->get_size(i);
+					ask_sizes[in_client_id][i] = other_side->get_size(i, in_client_id);
 				}
 			}
 
@@ -100,13 +100,13 @@ double Bid::nbbo(Book *other_side)
 		}
 	}
 
-	std::cout << nbbo_var[0] << " " << nbbo_var[1] << std::endl;
+	// std::cout << nbbo_var[0] << " " << nbbo_var[1] << std::endl;
 
 	return _default_price;
 }
 
 
-double Ask::nbbo(Book *other_side)
+double Ask::nbbo(Book *other_side, int in_client_id)
 {
 	for (nonconst_map<Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
 	{
@@ -118,22 +118,22 @@ double Ask::nbbo(Book *other_side)
 			// Update the opposite side
 			if (nbbo_var[1] < nbbo_old) // Quote
 			{
-				int distance = (int)((nbbo_old - nbbo_var[1]) / default_spread);
+				int distance = static_cast<int>((nbbo_old - nbbo_var[1]) / default_spread);
 				other_side->move_left(distance);
 
 				for (int i = 0; i != limit; ++i)
 				{
-					bid_sizes[i] = other_side->get_size(i);
+					bid_sizes[in_client_id][i] = other_side->get_size(i, in_client_id);
 				}
 			}
 			else if (nbbo_var[1] > nbbo_old) // Trade or Cancel
 			{
-				int distance = (int)((nbbo_var[1] - nbbo_old) / default_spread);
+				int distance = static_cast<int>((nbbo_var[1] - nbbo_old) / default_spread);
 				other_side->move_right(distance);
 
 				for (int i = 0; i != limit; ++i)
 				{
-					bid_sizes[i] = other_side->get_size(i);
+					bid_sizes[in_client_id][i] = other_side->get_size(i, in_client_id);
 				}
 			}
 
@@ -141,7 +141,7 @@ double Ask::nbbo(Book *other_side)
 		}
 	}
 
-	std::cout << nbbo_var[0] << " " << nbbo_var[1] << std::endl;
+	// std::cout << nbbo_var[0] << " " << nbbo_var[1] << std::endl;
 
 	return _default_price;
 }
@@ -149,12 +149,7 @@ double Ask::nbbo(Book *other_side)
 
 void Bid::Act(ClientOrder& order, int in_client_id, Book *other_side)
 {
-	for (nonconst_map<Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
-	{
-		// std::cout << "BID REAL SIZE: " << (*it).size() << std::endl;
-	}
-
-	int type = (int)(order.type_identifier % 3);
+	int type = static_cast<int>(order.type_identifier % 3);
 	double res;
 
 	switch (type)
@@ -172,8 +167,8 @@ void Bid::Act(ClientOrder& order, int in_client_id, Book *other_side)
 			break;
 		}
 
-		int distance = (int)(order_price / default_spread); // distance from the NBBO		
-		bid_sizes[distance] += order.size;
+		int distance = static_cast<int>(order_price / default_spread); // distance from the NBBO		
+		bid_sizes[in_client_id][distance] += order.size;
 
 		break;
 	}
@@ -189,22 +184,22 @@ void Bid::Act(ClientOrder& order, int in_client_id, Book *other_side)
 
 			// std::cout << "BID TRADE: " << (*it).size() << std::endl;
 
-			int distance = (int)(it.key() / default_spread); // distance from the NBBO
+			int distance = static_cast<int>(it.key() / default_spread); // distance from the NBBO
 			if (decimal_round(res, 2) == 0.0)
 			{
-				if (decimal_round(it.value().size(), 2) == 0.0)
+				if (decimal_round(it.value().size(in_client_id), 2) == 0.0)
 				{
-					bid_sizes[distance] = 0.0;
+					bid_sizes[in_client_id][distance] = 0.0;
 				}
 				else
 				{
-					bid_sizes[distance] -= order.size;
+					bid_sizes[in_client_id][distance] -= order.size;
 				}
 
 				break;
 			}
 
-			bid_sizes[distance] = 0.0;
+			bid_sizes[in_client_id][distance] = 0.0;
 		}
 
 		if (res != 0)
@@ -217,7 +212,6 @@ void Bid::Act(ClientOrder& order, int in_client_id, Book *other_side)
 
 	case 2:
 	{
-		// std::cout << "BID CANCEL" << std::endl;
 
 		int order_id{ false };
 		for (nonconst_map<Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
@@ -242,14 +236,14 @@ void Bid::Act(ClientOrder& order, int in_client_id, Book *other_side)
 			res = (it.value()).cancel(order, in_client_id);
 			if (res)
 			{
-				int distance = (int)(it.key() / default_spread); // distance from the NBBO		
-				if (decimal_round(it.value().size(), 2) == 0.0)
+				int distance = static_cast<int>(it.key() / default_spread); // distance from the NBBO		
+				if (decimal_round(it.value().size(in_client_id), 2) == 0.0)
 				{
-					bid_sizes[distance] = 0.0;
+					bid_sizes[in_client_id][distance] = 0.0;
 				}
 				else
 				{
-					bid_sizes[distance] -= order.size;
+					bid_sizes[in_client_id][distance] -= order.size;
 				}
 
 				break;
@@ -265,18 +259,14 @@ void Bid::Act(ClientOrder& order, int in_client_id, Book *other_side)
 	}
 	}
 
-	nbbo(other_side); // update NBBO
+	nbbo(other_side, in_client_id); // update NBBO
 }
 
 
 void Ask::Act(ClientOrder& order, int in_client_id, Book *other_side)
 {
-	for (nonconst_map<Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
-	{
-		// std::cout << "ASK REAL SIZE: " << (*it).size() << std::endl;
-	}
 
-	int type = (int)(order.type_identifier % 3);
+	int type = static_cast<int>(order.type_identifier % 3);
 	bool res;
 
 	switch (type)
@@ -295,8 +285,8 @@ void Ask::Act(ClientOrder& order, int in_client_id, Book *other_side)
 			break;
 		}
 
-		int distance = (int)(order_price / default_spread); // distance from the NBBO		
-		ask_sizes[distance] += order.size;
+		int distance = static_cast<int>(order_price / default_spread); // distance from the NBBO		
+		ask_sizes[in_client_id][distance] += order.size;
 
 		break;
 	}
@@ -311,22 +301,22 @@ void Ask::Act(ClientOrder& order, int in_client_id, Book *other_side)
 
 			// std::cout << "ASK TRADE: " << (*it).size() << std::endl;
 
-			int distance = (int)(it.key() / default_spread); // distance from the NBBO
+			int distance = static_cast<int>(it.key() / default_spread); // distance from the NBBO
 			if (decimal_round(res, 2) == 0.0)
 			{
-				if (decimal_round(it.value().size(), 2) == 0.0)
+				if (decimal_round(it.value().size(in_client_id), 2) == 0.0)
 				{
-					ask_sizes[distance] = 0.0;
+					ask_sizes[in_client_id][distance] = 0.0;
 				}
 				else
 				{
-					ask_sizes[distance] -= order.size;
+					ask_sizes[in_client_id][distance] -= order.size;
 				}
 
 				break;
 			}
 
-			ask_sizes[distance] = 0.0;
+			ask_sizes[in_client_id][distance] = 0.0;
 		}
 
 		if (res != 0)
@@ -338,7 +328,11 @@ void Ask::Act(ClientOrder& order, int in_client_id, Book *other_side)
 	}
 	case 2:
 	{
-		// std::cout << "ASK CANCEL" << std::endl;
+		/*for (int i = 0; i != limit; ++i)
+		{
+			std::cout << "BID ORDER SIZES, BOOK: " << bid_sizes[in_client_id][i] << std::endl;
+			std::cout << "ASK ORDER SIZES, BOOK: " << bid_sizes[in_client_id][i] << std::endl;
+		}*/
 
 		int order_id{ false };
 		for (nonconst_map<Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
@@ -363,14 +357,14 @@ void Ask::Act(ClientOrder& order, int in_client_id, Book *other_side)
 			res = (it.value()).cancel(order, in_client_id);
 			if (res)
 			{
-				int distance = (int)(it.key() / default_spread); // distance from the NBBO		
-				if (decimal_round(it.value().size(), 2) == 0.0)
+				int distance = static_cast<int>(it.key() / default_spread); // distance from the NBBO		
+				if (decimal_round(it.value().size(in_client_id), 2) == 0.0)
 				{
-					ask_sizes[distance] = 0.0;
+					ask_sizes[in_client_id][distance] = 0.0;
 				}
 				else
 				{
-					ask_sizes[distance] -= order.size;
+					ask_sizes[in_client_id][distance] -= order.size;
 				}
 
 				break;
@@ -386,5 +380,5 @@ void Ask::Act(ClientOrder& order, int in_client_id, Book *other_side)
 	}
 	}
 
-	nbbo(other_side); // update NBBO
+	nbbo(other_side, in_client_id); // update NBBO
 }
