@@ -1,7 +1,4 @@
 #pragma once
-#include <deque>
-#include <utility>
-#include <algorithm>
 
 extern double default_spread;
 extern int limit;

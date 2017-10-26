@@ -1,8 +1,5 @@
 #pragma once
 
-#include <deque>
-#include <vector>
-
 /*
 Faster implementation of sort algorithm for appending an element to an already sorted std::deque
 

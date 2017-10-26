@@ -1,10 +1,7 @@
 #pragma once
 
 #include "Client.h"
-#include "spdlog/spdlog.h" 
 #include "NonConstMap.h"
-
-#include <deque>
 
 extern int limit;
 extern double order_inf_size;

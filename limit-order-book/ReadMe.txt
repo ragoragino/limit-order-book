@@ -1,40 +1,37 @@
-========================================================================
-    CONSOLE APPLICATION : limit-order-book Project Overview
-========================================================================
+# limit-order-book
 
-AppWizard has created this limit-order-book application for you.
+This project implements a model of a limit order book inspired by the study Abergel, F., & Jedidi, A. (2013). 
+A mathematical approach to order book modeling. *International Journal of Theoretical and Applied Finance*, 16(05), 1350025.
+The core part is written in C++, while a Python binding is created with Pybind11. From Python, one can obtain the midprice 
+process of the book and the spread, both metrics for each time unit of the simulation.
 
-This file contains a summary of what you will find in each of the files that
-make up your limit-order-book application.
+For the specific usage of library functionalities, see the [lob_graphs.py](https://github.com/ragoragino/limit-order-book/tree/master/limit-order-book/lob_graphs.py) file.
 
+### Prerequisites
 
-limit-order-book.vcxproj
-    This is the main project file for VC++ projects generated using an Application Wizard.
-    It contains information about the version of Visual C++ that generated the file, and
-    information about the platforms, configurations, and project features selected with the
-    Application Wizard.
+64bit Python 3.6
 
-limit-order-book.vcxproj.filters
-    This is the filters file for VC++ projects generated using an Application Wizard. 
-    It contains information about the association between the files in your project 
-    and the filters. This association is used in the IDE to show grouping of files with
-    similar extensions under a specific node (for e.g. ".cpp" files are associated with the
-    "Source Files" filter).
+SPDlog https://github.com/gabime/spdlog
 
-limit-order-book.cpp
-    This is the main application source file.
+Pybind11 https://github.com/pybind/pybind11
 
-/////////////////////////////////////////////////////////////////////////////
-Other standard files:
+### Installing
 
-StdAfx.h, StdAfx.cpp
-    These files are used to build a precompiled header (PCH) file
-    named limit-order-book.pch and a precompiled types file named StdAfx.obj.
+There is a dynamic library built on Windows 10, 64bit Python 3.6 and MSVC 17.0 in the main directory (Pybind_Wrapper). 
+Just by downloading this .pyd file in your module directory, one can simply use "import Pybind_Wrapper" to import all the functionality of the library.
 
-/////////////////////////////////////////////////////////////////////////////
-Other notes:
+For usage on other systems and Python versions one should build the library from the source.
 
-AppWizard uses "TODO:" comments to indicate parts of the source code you
-should add to or customize.
+## Built With
 
-/////////////////////////////////////////////////////////////////////////////
+64bit Python, 3.6
+
+MSVC 17.0
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Note
+While building the model, I was more inclined to consider it as an exercise in OOP, 
+therefore the performance priority may have been sometimes neglected for the sake of OOP design.

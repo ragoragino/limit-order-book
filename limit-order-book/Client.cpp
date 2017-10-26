@@ -1,10 +1,6 @@
 #include "stdafx.h"
 
-#include <vector>
-#include <deque>
 #include "Client.h"
-
-#include <iostream>
 
 inline double decimal_round(double x, int points);
 extern double default_spread;
@@ -98,7 +94,6 @@ ClientOrder Client::Query(std::deque<double> bid_order_sizes,
 	return _client_order;
 }
 
-
 inline double Client::random_check()
 {
 	double random = rand();
@@ -112,12 +107,10 @@ inline double Client::random_check()
 	}
 }
 
-
 inline double Client::size_distribution()
 {
 	return 1.0;
 }
-
 
 inline double decimal_round(double x, int points)
 {

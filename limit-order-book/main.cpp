@@ -7,16 +7,6 @@
 #include "NonConstMap.h"
 #include "Additional.h"
 
-#include <iostream>
-#include <map>
-#include <utility>
-#include <memory>
-#include <unordered_map>
-#include <list>
-#include <stdlib.h>
-
-#include "spdlog/spdlog.h" // Logger
-
 int limit{ 10 }; // initial length of visible part of LOB
 double order_inf_size{ 10 };
 std::vector<double> Book::nbbo_var{ 100, 100.01 }; // initial NBBO quotations

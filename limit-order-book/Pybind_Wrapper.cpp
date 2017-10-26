@@ -10,18 +10,6 @@
 #include "NonConstMap.h"
 #include "Additional.h"
 
-#include <iostream>
-#include <map>
-#include <utility>
-#include <memory>
-#include <unordered_map>
-#include <list>
-#include <stdlib.h>
-
-#include "spdlog/spdlog.h" // Logger
-#include <pybind11/pybind11.h> // Pybind
-#include <pybind11/stl.h> // Pybind wrapper for STL
-
 namespace py = pybind11;
 
 std::map< int, std::deque<double> > Book::bid_sizes;
@@ -55,14 +43,15 @@ public:
 		double in_order_inf_size = 5, double in_default_spread = 0.01,
 		double in_horizon = 1000.0, int in_no_clients = 3, unsigned 
 		int in_random_seed = 123, std::vector<double> in_initial_nbbo =
-		std::vector<double>{ 100.0, 100.01 }) :
+		std::vector<double>{ 100.0, 100.01 }, std::string in_log_dir = "Logs/log.txt") :
 		_order_type_counter(6), // 6 type_identifiers in ClientOrder
-		horizon{ in_horizon },
-		no_of_clients{ in_no_clients },
-		random_seed{ in_random_seed },
-		market_intensity{ in_market_intensity },
-		quote_intensity{ in_quote_intensity },
-		cancel_intensity{ in_cancel_intensity }
+		_market_intensity{ in_market_intensity },
+		_quote_intensity{ in_quote_intensity },
+		_cancel_intensity{ in_cancel_intensity },
+		_horizon{ in_horizon },
+		_no_of_clients{ in_no_clients },
+		_random_seed{ in_random_seed },
+		_log_dir{ in_log_dir }
 	{
 		limit = in_limit;
 		default_spread = in_default_spread;
@@ -99,27 +88,28 @@ public:
 		return _order_type_counter;
 	}
 
-	const double horizon;
-	const int no_of_clients;
-	const unsigned int random_seed;
-	const double market_intensity;
-	const std::vector<double> quote_intensity, cancel_intensity;
 
 private:
+	const double _horizon;
+	const int _no_of_clients;
+	const unsigned int _random_seed;
+	const double _market_intensity;
+	const std::vector<double> _quote_intensity, _cancel_intensity;
 	std::vector<double> _spread, _midprice, _distance;
 	std::vector<int> _order_type_counter;
+	const std::string _log_dir;
 };
 
 void LOB::run()
 {
 	std::shared_ptr<spdlog::logger> my_logger =
-		spdlog::basic_logger_mt("basic_logger", "D:/Materials/Programming/Projekty/limit-order-book/limit-order-book/Logs/basic.txt", true);
+		spdlog::basic_logger_mt("basic_logger", _log_dir, true);
 	spdlog::set_pattern("[%H:%M:%S %z] [%l] %v");
-	srand(random_seed); // random seed
+	srand(_random_seed); // random seed
 
 	// Market initialization
-	std::vector<int> client_ids(no_of_clients);
-	for (int i = 0; i != no_of_clients; ++i)
+	std::vector<int> client_ids(_no_of_clients);
+	for (int i = 0; i != _no_of_clients; ++i)
 	{
 		client_ids[i] = i;
 	}
@@ -130,7 +120,7 @@ void LOB::run()
 	for (int i = 0; i != client_ids.size(); ++i)
 	{
 		clients.emplace(std::make_pair(client_ids[i], std::make_unique<Client>
-			(limit, market_intensity, quote_intensity, cancel_intensity)));
+			(limit, _market_intensity, _quote_intensity, _cancel_intensity)));
 
 		Book::bid_sizes[i] = std::deque<double>(limit, 0.0);
 		Book::ask_sizes[i] = std::deque<double>(limit, 0.0);
@@ -153,7 +143,7 @@ void LOB::run()
 
 	t = client_orders[0].client_order.time;
 
-	while (t < horizon)
+	while (t < _horizon)
 	{
 		// Saving the spread and midprice values at each time unit point
 		if (t > t_old)
@@ -190,13 +180,14 @@ PYBIND11_MODULE(Pybind_Wrapper, m)
 {
 	py::class_<LOB>(m, "LOB")
 		.def(py::init< double, std::vector<double>, std::vector<double>, 
-			int, double, double, double, int, unsigned int, std::vector<double> >(),
+			int, double, double, double, int, unsigned int, std::vector<double>, 
+			std::string >(),
 			py::arg("market_intensity"), py::arg("quote_intensity"), 
 			py::arg("cancel_intensity"), py::arg("limit") = 5, 
 			py::arg("order_inf_size") = 5.0, py::arg("default_spread") = 0.01, 
 			py::arg("horizon") = 1000.0, py::arg("no_clients") = 3, 
 			py::arg("random_seed") = 123, py::arg("initial_nbbo") = 
-			std::vector<double>{ 100.0, 100.01 })
+			std::vector<double>{ 100.0, 100.01 }, py::arg("log_dir") = "Logs/log.txt" )
 		.def("get_spread", &LOB::get_spread)
 		.def("get_midprice", &LOB::get_midprice)
 		.def("get distance", &LOB::get_distance)

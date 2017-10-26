@@ -2,13 +2,7 @@
 
 #include "Book.h"
 #include "Client.h"
-#include "spdlog/spdlog.h" 
 #include "NonConstMap.h"
-
-#include <deque>
-#include <memory>
-
-#include <iostream>
 
 void Tick::quote(const ClientOrder& client_order, int client_id)
 {
