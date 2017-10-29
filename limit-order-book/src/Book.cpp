@@ -63,8 +63,6 @@ double Bid::nbbo(Book *other_side)
 		{
 			double nbbo_old = nbbo_var[0];
 
-			// std::cout << "IT KEY: " << it.key() << std::endl;
-
 			nbbo_var[0] = nbbo_var[1] - default_spread - it.key();
 
 			if (decimal_round(nbbo_var[0], 2) > decimal_round(nbbo_old, 2)) // Quote
@@ -179,8 +177,6 @@ double Ask::nbbo(Book *other_side)
 
 void Bid::Act(ClientOrder& order, int in_client_id, Book *other_side)
 {
-	// std::cout << "CLIENT ID: " << in_client_id << std::endl;
-
 	int type = static_cast<int>(order.type_identifier % 3);
 
 	switch (type)
@@ -188,8 +184,6 @@ void Bid::Act(ClientOrder& order, int in_client_id, Book *other_side)
 	case 0: // Quote
 	{
 		double order_price = order.price;
-
-		// std::cout << "BID QUOTE" << order_price << std::endl;
 
 		_side[order_price].quote(order, in_client_id);
 
@@ -204,12 +198,8 @@ void Bid::Act(ClientOrder& order, int in_client_id, Book *other_side)
 		double res{ order.size };
 		for (nonconst_map<Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
 		{
-			// std::cout << "BID TRADE: " << (*it).size() << std::endl;
-
 			res = it.value().trade(order);
 
-			// std::cout << "BID TRADE: " << (*it).size() << std::endl;
-			
 			int distance = static_cast<int>(it.key() / default_spread); // distance from the NBBO
 			bid_sizes[in_client_id][distance] = it.value().size(in_client_id);
 
@@ -229,8 +219,6 @@ void Bid::Act(ClientOrder& order, int in_client_id, Book *other_side)
 
 	case 2: // Cancel
 	{
-		// std::cout << "BID CANCEL" << std::endl;
-
 		bool res;
 		int order_id{ false };
 		for (nonconst_map<Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
@@ -272,38 +260,12 @@ void Bid::Act(ClientOrder& order, int in_client_id, Book *other_side)
 	}
 	}
 
-	/*
-	std::cout << "BS" << std::endl;
-	for (int i = 0; i != limit; ++i)
-	{
-		std::cout << bid_sizes[in_client_id][i] << ',';
-	}
-
-	std::cout << std::endl;
-
-	std::cout << "AS" << std::endl;
-	for (int i = 0; i != limit; ++i)
-	{
-		std::cout << ask_sizes[in_client_id][i] << ',';
-	}
-	std::cout << std::endl;
-
-	std::cout << "FIND" << std::endl;
-	for (nonconst_map<Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
-	{
-		std::cout << (*it).size() << ',';
-	}
-	std::cout << std::endl;
-	*/
-
 	nbbo(other_side); // update NBBO
 }
 
 
 void Ask::Act(ClientOrder& order, int in_client_id, Book *other_side)
 {
-	// std::cout << "CLIENT ID: " << in_client_id << std::endl;
-
 	int type = static_cast<int>(order.type_identifier % 3);
 
 	switch (type)
@@ -311,8 +273,6 @@ void Ask::Act(ClientOrder& order, int in_client_id, Book *other_side)
 	case 0:
 	{
 		double order_price = order.price;
-
-		// std::cout << "ASK QUOTE" << order_price << std::endl;
 
 		_side[order_price].quote(order, in_client_id);
 
@@ -327,8 +287,6 @@ void Ask::Act(ClientOrder& order, int in_client_id, Book *other_side)
 		for (nonconst_map<Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
 		{
 			res = (it.value()).trade(order);
-
-			// std::cout << "ASK TRADE: " << (*it).size() << std::endl;
 
 			int distance = static_cast<int>(it.key() / default_spread); // distance from the NBBO
 			ask_sizes[in_client_id][distance] = it.value().size(in_client_id);
@@ -348,8 +306,6 @@ void Ask::Act(ClientOrder& order, int in_client_id, Book *other_side)
 	}
 	case 2:
 	{
-		// std::cout << "ASK CANCEL" << std::endl;
-
 		bool res;
 		int order_id{ false };
 		for (nonconst_map<Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
@@ -390,28 +346,6 @@ void Ask::Act(ClientOrder& order, int in_client_id, Book *other_side)
 		break;
 	}
 	}
-	/*
-	std::cout << "BS" << std::endl;
-	for (int i = 0; i != limit; ++i)
-	{
-		std::cout << bid_sizes[in_client_id][i] << ',';
-	}
 
-	std::cout << std::endl;
-
-	std::cout << "AS" << std::endl;
-	for (int i = 0; i != limit; ++i)
-	{
-		std::cout << ask_sizes[in_client_id][i] << ',';
-	}
-	std::cout << std::endl;
-
-	std::cout << "FIND" << std::endl;
-	for (nonconst_map<Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
-	{
-		std::cout << (*it).size() << ',';
-	}
-	std::cout << std::endl;
-	*/
 	nbbo(other_side); // update NBBO
 }
