@@ -1,8 +1,6 @@
 #include "stdafx.h"
 
 #include "Book.h"
-#include "Client.h"
-#include "NonConstMap.h"
 
 void Tick::quote(const ClientOrder& client_order, int client_id)
 {
@@ -181,25 +179,6 @@ double Ask::nbbo(Book *other_side)
 
 void Bid::Act(ClientOrder& order, int in_client_id, Book *other_side)
 {
-	// Checking whether the in_client_id is valid
-	bool valid_id{ false };
-	for(int i = 0; i != _client_ids.size(); ++i)
-	{ 
-		if (in_client_id == _client_ids[i])
-		{
-			valid_id = true;
-
-			break;
-		}
-	}
-
-	if (!valid_id)
-	{
-		_logger_device->warn("{} : Order from an invalid client", order.time);
-
-		return;
-	}
-
 	// std::cout << "CLIENT ID: " << in_client_id << std::endl;
 
 	int type = static_cast<int>(order.type_identifier % 3);
@@ -323,25 +302,6 @@ void Bid::Act(ClientOrder& order, int in_client_id, Book *other_side)
 
 void Ask::Act(ClientOrder& order, int in_client_id, Book *other_side)
 {
-	// Checking whether the in_client_id is valid
-	bool valid_id{ false };
-	for (int i = 0; i != _client_ids.size(); ++i)
-	{
-		if (in_client_id == _client_ids[i])
-		{
-			valid_id = true;
-
-			break;
-		}
-	}
-
-	if (!valid_id)
-	{
-		_logger_device->warn("{} : Order from a non-existent client", order.time);
-
-		return;
-	}
-
 	// std::cout << "CLIENT ID: " << in_client_id << std::endl;
 
 	int type = static_cast<int>(order.type_identifier % 3);

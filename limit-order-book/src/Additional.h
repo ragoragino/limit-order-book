@@ -70,10 +70,15 @@ bool compare(const OrderWrapper& a, const OrderWrapper& b)
 
 
 /*
-Class holding information about spread and midprice during the simulation
+Function for rounding doubles
+
+@param
+x: double to round
+points: decimal precision of rounding
+
+@return
 */
-struct Archive
+inline double decimal_round(double x, int points)
 {
-	std::vector<double> spread;
-	std::vector<double> midprice;
-};
+	return round(x * pow(10, points)) / pow(10, points);
+}

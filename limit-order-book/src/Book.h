@@ -3,10 +3,9 @@
 #include "Client.h"
 #include "NonConstMap.h"
 
-extern int limit;
-extern double order_inf_size;
-extern double default_spread;
-inline double decimal_round(double x, int points);
+extern int limit, no_clients;
+extern double order_inf_size, default_spread;
+extern double decimal_round(double x, int points);
 
 /*
 Abstract base class that defines the functionality of the limit order book
@@ -30,7 +29,10 @@ public:
 	Book(std::shared_ptr<spdlog::logger> in_logger_device, 
 		std::vector<int> in_client_ids) :
 		_logger_device{ in_logger_device },
-		_client_ids { in_client_ids } {};
+		_client_ids { in_client_ids } 
+	{
+		_client_ids.push_back(in_client_ids.back() + 1); // default client
+	};
 
 	Book(const Book&) = default;
 
@@ -101,7 +103,7 @@ public:
 	static std::vector<double> nbbo_var; 
 	
 	// Map holding pairs of client_ids and sizes of visible limit order book
-	static std::map< int, std::deque<double> > bid_sizes, ask_sizes;
+	static std::map< int, std::vector<double> > bid_sizes, ask_sizes;
 
 protected:
 	std::shared_ptr<spdlog::logger> _logger_device;
@@ -122,7 +124,7 @@ class Order
 public:
 	// Default _id and _client_id for inf_orders is -1, -1, respectively.
 	Order() : _size{ order_inf_size }, _id{ -1 },
-		_client_id{ -1 } {};
+		_client_id{ no_clients } {}; // default client id
 
 	/*
 	Parameter constructor
@@ -370,8 +372,6 @@ Class that holds the state of the bid side of the limit order book
 class Bid : public Book
 {
 public:
-	Bid() = delete;
-
 	/*
 	Parameter constructor
 
@@ -385,7 +385,8 @@ public:
 	Bid(double in_default_price, std::shared_ptr<spdlog::logger> 
 		in_logger_device, std::vector<int> in_client_id) :
 		_default_price(in_default_price), 
-		Book{ in_logger_device, in_client_id } {  };
+		_side(limit, default_spread),
+		Book{ in_logger_device, in_client_id } {};
 
 	Bid(const Bid&) = default;
 
@@ -498,8 +499,6 @@ private:
 class Ask : public Book
 {
 public:
-	Ask() = delete;
-
 	/*
 	Parameter constructor
 
@@ -513,6 +512,7 @@ public:
 	Ask(double in_default_price, std::shared_ptr<spdlog::logger> 
 		in_logger_device, std::vector<int> in_client_id) :
 		_default_price{ in_default_price }, 
+		_side(limit, default_spread),
 		Book{ in_logger_device, in_client_id } {};
 
 	Ask(const Ask&) = default;

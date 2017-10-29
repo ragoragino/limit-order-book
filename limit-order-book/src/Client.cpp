@@ -2,32 +2,10 @@
 
 #include "Client.h"
 
-inline double decimal_round(double x, int points);
-extern double default_spread;
+extern double decimal_round(double x, int points);
 
-class ParameterError : public std::runtime_error
-{
-public:
-	ParameterError(std::string message)
-		: std::runtime_error(message) { }
-};
-
-class SizeError : public std::runtime_error
-{
-public:
-	SizeError(std::string message)
-		: std::runtime_error(message) { }
-};
-
-class IncorrectSideError : public std::runtime_error
-{
-public:
-	IncorrectSideError(std::string message)
-		: std::runtime_error(message) { }
-};
-
-ClientOrder Client::Query(std::deque<double> bid_order_sizes, 
-	std::deque<double> ask_order_sizes)
+ClientOrder Client::Query(const std::vector<double>& bid_order_sizes,
+	const std::vector<double>& ask_order_sizes)
 {
 	double upper_intensity{ _upper_intensity_base };
 
@@ -89,7 +67,7 @@ ClientOrder Client::Query(std::deque<double> bid_order_sizes,
 		_client_order.id = _id[_client_order.type_identifier]++;
 	}
 
-	_client_order.price *= default_spread;
+	_client_order.price *= _default_spread;
 
 	return _client_order;
 }
@@ -110,11 +88,6 @@ inline double Client::random_check()
 inline double Client::size_distribution()
 {
 	return 1.0;
-}
-
-inline double decimal_round(double x, int points)
-{
-	return round(x * pow(10, points)) / pow(10, points);
 }
 
 

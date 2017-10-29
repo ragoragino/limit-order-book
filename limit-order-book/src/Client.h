@@ -48,7 +48,7 @@ public:
 
 	@return
 	*/
-	Client(int in_limit, double in_market_intensity,
+	Client(int in_limit, double in_default_spread, double in_market_intensity,
 		std::vector<double> in_quote_intensity,
 		std::vector<double> in_cancel_intensity) :
 		_id{ 1000000, 1000000, 1000000, 1000000, 1000000, 1000000 }, // initial ids
@@ -56,6 +56,7 @@ public:
 		_default_cancel_price{ 0.0 },
 		_default_cancel_size{ 0.0 },
 		_limit{ in_limit },
+		_default_spread{ in_default_spread },
 		_market_intensity{ in_market_intensity },
 		_quote_intensity{ in_quote_intensity },
 		_cancel_intensity{ in_cancel_intensity },
@@ -93,8 +94,8 @@ public:
 
 	@return
 	*/
-	ClientOrder Query(std::deque<double> bid_order_sizes, 
-		std::deque<double> ask_order_sizes);
+	ClientOrder Query(const std::vector<double>& bid_order_sizes, 
+		const std::vector<double>& ask_order_sizes);
 
 	/*
 	Function that returns a random number in the interval (0, 1) 
@@ -119,7 +120,7 @@ private:
 
 	std::vector<int> _id;
 	double _default_trade_price, _default_cancel_price, _default_cancel_size, 
-		_market_intensity, _upper_intensity_base;
+		_market_intensity, _upper_intensity_base, _default_spread;
 	int _limit;
 	std::vector<double> _quote_intensity, _cancel_intensity, _event;
 	ClientOrder _client_order;

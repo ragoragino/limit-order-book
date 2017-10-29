@@ -10,12 +10,26 @@
 #include "NonConstMap.h"
 #include "Additional.h"
 
+class SizeError : public std::runtime_error
+{
+public:
+	SizeError(std::string message)
+		: std::runtime_error(message) { }
+};
+
+class ValueError : public std::runtime_error
+{
+public:
+	ValueError(std::string message)
+		: std::runtime_error(message) { }
+};
+
 namespace py = pybind11;
 
-std::map< int, std::deque<double> > Book::bid_sizes;
-std::map< int, std::deque<double> > Book::ask_sizes;
+std::map< int, std::vector<double> > Book::bid_sizes;
+std::map< int, std::vector<double> > Book::ask_sizes;
 std::vector<double> Book::nbbo_var;
-int limit;
+int limit, no_clients;
 double default_spread, order_inf_size;
 
 class LOB
@@ -49,14 +63,74 @@ public:
 		_quote_intensity{ in_quote_intensity },
 		_cancel_intensity{ in_cancel_intensity },
 		_horizon{ in_horizon },
-		_no_of_clients{ in_no_clients },
 		_random_seed{ in_random_seed },
 		_log_dir{ in_log_dir }
 	{
+		// Raising exceptions
+		if (in_quote_intensity.size() != in_cancel_intensity.size())
+		{
+			throw SizeError("Quote and cancellation intensity lengths' must be equal");
+		}
+		
+		for (int i = 0; i != in_quote_intensity.size(); ++i)
+		{
+			if (in_quote_intensity[i] <= 0 || in_cancel_intensity[i] <= 0)
+			{
+				throw ValueError("Intensity must be positive!");
+			}
+		}
+
+		if (in_market_intensity <= 0)
+		{
+			throw ValueError("Intensity must be positive!");
+		}
+
+		if (in_limit <= 0)
+		{
+			throw ValueError("Limit must be positive!");
+		}
+
+		if (in_order_inf_size <= 0)
+		{
+			throw ValueError("Infinity size must be positive!");
+		}
+
+		if (in_default_spread <= 0)
+		{
+			throw ValueError("Default spread must be positive!");
+		}
+
+		if (in_horizon <= 0)
+		{
+			throw ValueError("Horizon must be positive!");
+		}
+
+		if (in_no_clients <= 0)
+		{
+			throw ValueError("Number of clients must be positive!");
+		}
+
+		if (in_initial_nbbo.size() != 2)
+		{
+			throw SizeError("Initial NBBO must be of size 2!");
+		}
+
+		if (in_initial_nbbo[0] <= 0 || in_initial_nbbo[1] <= 0)
+		{
+			throw ValueError("Initial NBBO must be positive!");
+		}
+
 		limit = in_limit;
 		default_spread = in_default_spread;
 		order_inf_size = in_order_inf_size;
+		no_clients = in_no_clients;
 		Book::nbbo_var = in_initial_nbbo;
+
+		int length = static_cast<int>(in_horizon);
+		_spread = std::make_unique< std::vector<double> >(length);
+		_midprice = std::make_unique< std::vector<double> >(length);
+		_bid_size = std::vector<double>(limit, 0.0);
+		_ask_size = std::vector<double>(limit, 0.0);
 	};
 
 	/*
@@ -70,17 +144,12 @@ public:
 
 	std::vector<double> get_spread() 
 	{
-		return _spread;
+		return (*_spread);
 	}
 
 	std::vector<double> get_midprice() 
 	{
-		return _midprice;
-	}
-
-	std::vector<double> get_distance() 
-	{
-		return _distance;
+		return (*_midprice);
 	}
 
 	std::vector<int> get_order_type_counter()
@@ -88,16 +157,26 @@ public:
 		return _order_type_counter;
 	}
 
+	std::vector<double> get_bid_size()
+	{
+		return _bid_size;
+	}
+
+	std::vector<double> get_ask_size()
+	{
+		return _ask_size;
+	}
 
 private:
 	const double _horizon;
-	const int _no_of_clients;
 	const unsigned int _random_seed;
 	const double _market_intensity;
 	const std::vector<double> _quote_intensity, _cancel_intensity;
-	std::vector<double> _spread, _midprice, _distance;
 	std::vector<int> _order_type_counter;
+	std::vector<double> _bid_size, _ask_size;
 	const std::string _log_dir;
+
+	std::unique_ptr< std::vector<double> > _spread, _midprice;
 };
 
 void LOB::run()
@@ -108,8 +187,8 @@ void LOB::run()
 	srand(_random_seed); // random seed
 
 	// Market initialization
-	std::vector<int> client_ids(_no_of_clients);
-	for (int i = 0; i != _no_of_clients; ++i)
+	std::vector<int> client_ids(no_clients);
+	for (int i = 0; i != no_clients; ++i)
 	{
 		client_ids[i] = i;
 	}
@@ -120,14 +199,18 @@ void LOB::run()
 	for (int i = 0; i != client_ids.size(); ++i)
 	{
 		clients.emplace(std::make_pair(client_ids[i], std::make_unique<Client>
-			(limit, _market_intensity, _quote_intensity, _cancel_intensity)));
+			(limit, default_spread, _market_intensity, _quote_intensity, _cancel_intensity)));
 
-		Book::bid_sizes[i] = std::deque<double>(limit, 0.0);
-		Book::ask_sizes[i] = std::deque<double>(limit, 0.0);
+		Book::bid_sizes[i] = std::vector<double>(limit, 0.0);
+		Book::ask_sizes[i] = std::vector<double>(limit, 0.0);
 	}
 
-	double t, t_old{ 0.0 };
-	int side, client_id;
+	// filling the values for the default client
+	Book::bid_sizes[client_ids.back() + 1] = std::vector<double>(limit, 0.0);
+	Book::ask_sizes[client_ids.back() + 1] = std::vector<double>(limit, 0.0);
+
+	double t, bid_size_tmp, ask_size_tmp, t_old{ 0.0 };
+	int side, client_id, t_old_tmp;
 	ClientOrder tmp_order;
 	std::deque<OrderWrapper> client_orders(client_ids.size());
 
@@ -148,8 +231,28 @@ void LOB::run()
 		// Saving the spread and midprice values at each time unit point
 		if (t > t_old)
 		{
-			_spread.push_back(Book::nbbo_var[1] - Book::nbbo_var[0]);
-			_midprice.push_back((Book::nbbo_var[1] + Book::nbbo_var[0]) / 2);
+			t_old_tmp = static_cast<int>(t_old);
+
+			// Saving the spread and midprice at each time unit point
+			(*_spread)[t_old_tmp] = Book::nbbo_var[1] - Book::nbbo_var[0];
+			(*_midprice)[t_old_tmp] = (Book::nbbo_var[1] + Book::nbbo_var[0]) / 2;
+
+			// Update average order book size at each time unit point
+			for (int i = 0; i != limit; ++i)
+			{
+				bid_size_tmp = 0.0;
+				ask_size_tmp = 0.0;
+
+				for (int j = 0; j <= client_ids.size(); ++j) // include the default client
+				{
+					bid_size_tmp += Book::bid_sizes[j][i];
+					ask_size_tmp += Book::ask_sizes[j][i];
+				}
+
+				_bid_size[i] = _bid_size[i] * t_old / (t_old + 1) + bid_size_tmp / (t_old + 1);
+				_ask_size[i] = _ask_size[i] * t_old / (t_old + 1) + ask_size_tmp / (t_old + 1);
+			}
+
 			t_old += 1;
 		}
 
@@ -179,18 +282,19 @@ void LOB::run()
 PYBIND11_MODULE(Pybind_Wrapper, m)
 {
 	py::class_<LOB>(m, "LOB")
-		.def(py::init< double, std::vector<double>, std::vector<double>, 
-			int, double, double, double, int, unsigned int, std::vector<double>, 
+		.def(py::init< double, std::vector<double>, std::vector<double>,
+			int, double, double, double, int, unsigned int, std::vector<double>,
 			std::string >(),
-			py::arg("market_intensity"), py::arg("quote_intensity"), 
-			py::arg("cancel_intensity"), py::arg("limit") = 5, 
-			py::arg("order_inf_size") = 5.0, py::arg("default_spread") = 0.01, 
-			py::arg("horizon") = 1000.0, py::arg("no_clients") = 3, 
-			py::arg("random_seed") = 123, py::arg("initial_nbbo") = 
-			std::vector<double>{ 100.0, 100.01 }, py::arg("log_dir") = "Logs/log.txt" )
+			py::arg("market_intensity"), py::arg("quote_intensity"),
+			py::arg("cancel_intensity"), py::arg("limit") = 5,
+			py::arg("order_inf_size") = 5.0, py::arg("default_spread") = 0.01,
+			py::arg("horizon") = 1000.0, py::arg("no_clients") = 3,
+			py::arg("random_seed") = 123, py::arg("initial_nbbo") =
+			std::vector<double>{ 100.0, 100.01 }, py::arg("log_dir") = "Logs/log.txt")
 		.def("get_spread", &LOB::get_spread)
 		.def("get_midprice", &LOB::get_midprice)
-		.def("get distance", &LOB::get_distance)
+		.def("get_bid_size", &LOB::get_bid_size)
+		.def("get_ask_size", &LOB::get_ask_size)
 		.def("get_order_type_counter", &LOB::get_order_type_counter)
 		.def("run", &LOB::run);
 }
