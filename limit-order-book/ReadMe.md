@@ -20,7 +20,7 @@ Pybind11 https://github.com/pybind/pybind11
 There is a dynamic library built on Windows 10, 64bit Python 3.6 and MSVC 15.0 in the main directory (Pybind_Wrapper). 
 Just by downloading this .pyd file in your module directory, one can simply use "import Pybind_Wrapper" to import all the functionality of the library.
 
-For usage on other systems and Python versions one should build the library from the source.
+For usage on other systems and Python versions one should build the library from the source (the name of the resulting dynamic library needs to be Pybind_Wrapper).
 
 ## Built With
 
