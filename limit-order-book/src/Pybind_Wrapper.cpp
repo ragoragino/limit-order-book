@@ -1,4 +1,3 @@
-// limit-order-book.cpp : Defines the entry point for the console application.
 #include "stdafx.h"
 
 // In order to build it into dynamic .pyd follow:
@@ -39,9 +38,9 @@ public:
 	Parameter constructor
 
 	@param
-	in_market_intensity: intensity of the market orders
-	in_quote_intensity: intensity of the quote orders
-	in_cancel_intensity: intensity of the cancel orders
+	in_market_intensity: intensity of market orders
+	in_quote_intensity: intensity of quote orders
+	in_cancel_intensity: intensity of cancel orders
 	in_limit: length of the visible part of the order book
 	in_order_nf_size: size of the single invisible tick
 	in_default_spread: default spread
@@ -49,6 +48,7 @@ public:
 	in_no_clients: number of clients
 	in_random_seed: initializing random seed
 	in_initial_nbbo: initial nbbo prices
+	in_log_dir: directory to save logging output
 
 	@return
 	*/
@@ -175,7 +175,6 @@ private:
 	std::vector<int> _order_type_counter;
 	std::vector<double> _bid_size, _ask_size;
 	const std::string _log_dir;
-
 	std::unique_ptr< std::vector<double> > _spread, _midprice;
 };
 
@@ -183,7 +182,7 @@ void LOB::run()
 {
 	std::shared_ptr<spdlog::logger> my_logger =
 		spdlog::basic_logger_mt("basic_logger", _log_dir, true);
-	spdlog::set_pattern("[%H:%M:%S %z] [%l] %v");
+	spdlog::set_pattern("[%H:%M:%S %z] [%l] %v"); // logger
 	srand(_random_seed); // random seed
 
 	// Market initialization
@@ -192,9 +191,11 @@ void LOB::run()
 	{
 		client_ids[i] = i;
 	}
-	Bid *bid = new Bid{ Book::nbbo_var[0], my_logger, client_ids };
-	Ask *ask = new Ask{ Book::nbbo_var[1], my_logger, client_ids };
-	Book *lob[] = { bid, ask };
+	std::shared_ptr<Bid> bid = std::make_shared<Bid>(Book::nbbo_var[0], my_logger, client_ids);
+	std::shared_ptr<Ask> ask = std::make_shared<Ask>(Book::nbbo_var[1], my_logger, client_ids);
+	std::vector< std::shared_ptr<Book> > lob = { bid, ask }; // Limit Order Book
+	
+	// Initializing clients and their sizes
 	std::unordered_map< int, std::unique_ptr<Client> > clients;
 	for (int i = 0; i != client_ids.size(); ++i)
 	{
@@ -205,15 +206,17 @@ void LOB::run()
 		Book::ask_sizes[i] = std::vector<double>(limit, 0.0);
 	}
 
-	// filling the values for the default client
+	// Initializing sizes for a default client
 	Book::bid_sizes[client_ids.back() + 1] = std::vector<double>(limit, 0.0);
 	Book::ask_sizes[client_ids.back() + 1] = std::vector<double>(limit, 0.0);
 
+	// Declaring and initializing variables in used in the simulation
 	double t, bid_size_tmp, ask_size_tmp, t_old{ 0.0 };
 	int side, client_id, t_old_tmp;
 	ClientOrder tmp_order;
 	std::deque<OrderWrapper> client_orders(client_ids.size());
 
+	// Querrying and sorting clients for their first orders
 	for (int i = 0; i != client_ids.size(); ++i)
 	{
 		tmp_order = clients[i]->Query(Book::bid_sizes[i], Book::ask_sizes[i]);
@@ -226,24 +229,24 @@ void LOB::run()
 
 	t = client_orders[0].client_order.time;
 
+	// Simulation
 	while (t < _horizon)
 	{
-		// Saving the spread and midprice values at each time unit point
 		if (t > t_old)
 		{
 			t_old_tmp = static_cast<int>(t_old);
 
-			// Saving the spread and midprice at each time unit point
+			// Saving the spread and midprice values at each time unit point
 			(*_spread)[t_old_tmp] = Book::nbbo_var[1] - Book::nbbo_var[0];
 			(*_midprice)[t_old_tmp] = (Book::nbbo_var[1] + Book::nbbo_var[0]) / 2;
 
-			// Update average order book size at each time unit point
+			// Updating average order book size at each time unit point
 			for (int i = 0; i != limit; ++i)
 			{
 				bid_size_tmp = 0.0;
 				ask_size_tmp = 0.0;
 
-				for (int j = 0; j <= client_ids.size(); ++j) // include the default client
+				for (int j = 0; j <= client_ids.size(); ++j) // including the default client
 				{
 					bid_size_tmp += Book::bid_sizes[j][i];
 					ask_size_tmp += Book::ask_sizes[j][i];
@@ -259,22 +262,19 @@ void LOB::run()
 		// Saving the count of different orders
 		_order_type_counter[client_orders[0].client_order.type_identifier] += 1;
 
-		// Processing the order
+		// Processing new order
 		side = static_cast<int>(client_orders[0].client_order.type_identifier / 3);
 		client_id = client_orders[0].client_id;
 		lob[side]->Act(client_orders[0].client_order, client_id, lob[side ? 0 : 1]);
 		client_orders.pop_front();
 
-		// Querrying the client for new order
+		// Querrying last client for a new order
 		tmp_order = clients[client_id]->Query(Book::bid_sizes[client_id], Book::ask_sizes[client_id]);
 
 		deque_sort(client_orders, OrderWrapper(tmp_order, client_id), compare);
 
 		t = client_orders[0].client_order.time;
 	}
-
-	delete lob[0];
-	delete lob[1];
 }
 
 

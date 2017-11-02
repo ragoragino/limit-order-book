@@ -5,7 +5,7 @@ Faster implementation of sort algorithm for appending an element to an already s
 
 @param
 	in_deque: already sorted deque
-	i: single element to be appended to the in_deque
+	i: single element to be appended to in_deque
 	func: function comparing two T objects, similar to Compare in std::sort
 
 @return

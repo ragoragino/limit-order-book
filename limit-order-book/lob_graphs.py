@@ -1,6 +1,6 @@
 """
 This file simulates Limit Order Book
-.pyd file limit-order-book needs to be renamed
+.pyd file limit-order-book from compilation needs to be renamed
 (e.g. Pybind_Wrapper in this case) and imported
 """
 
@@ -21,21 +21,22 @@ import Pybind_Wrapper
 if __name__ == '__main__':
     """
     Class for Limit Order Book simulation
+
     Args:
-        market_intensity(double) = intensity of the market orders
-        quote_intensity(std::vector<double>) = intensity of the quote orders
-        cancel_intensity(std::vector<double>) = intensity of the cancellation orders
+        market_intensity (float) = intensity of the market orders
+        quote_intensity (list) = intensity of the quote orders
+        cancel_intensity (list) = intensity of the cancellation orders
         limit (int) = length of the visible part of the limit order book, set to 5
-        order_inf_size (double) = size of the invisible part of the limit order book, set to 5
-        default_spread (double) = default spread, set to 0.1
-        horizon (double) = time length of the simulation, set to 1000.0
+        order_inf_size (float) = size of the invisible part of the limit order book, set to 5
+        default_spread (float) = default spread, set to 0.1
+        horizon (float) = time length of the simulation, set to 1000.0
         no_clients (int) = number of clients, set to 3
-        random_seed (unsigned int) = random seed, set to 123
-        initial_nbbo (std::vector<double>) = initial NBBO prices, set to 100.00 and 100.01
-        log_dir(std::string) = directory for logs, default Logs\log.txt
+        random_seed (non-negative int) = random seed, set to 123
+        initial_nbbo (list) = initial NBBO prices, set to 100.00 and 100.01
+        log_dir (string) = directory for logs, default Logs\log.txt
 
     Returns:
-        object of custom type
+        LOB instance
 
     Raises:
     """
@@ -102,14 +103,14 @@ if __name__ == '__main__':
         print("Number of {} orders was: {}".format(order_types_dict[i], order_type))
 
     # Plot of the spread distribution - LIMIT + 2 because of possibility of
-    # total emptiness of book -> might not happen during our simulation
+    # total emptiness of book -> might not happen during simulation
     plt.figure(figsize=(16, 12))
     bin_range = [DEFAULT_SPREAD / 2 + i * DEFAULT_SPREAD for i in range(LIMIT + 2)]
     plt.hist(spread, normed=1, bins=bin_range, color="brown")
     plt.title("Distribution of spread of the LOB simulation")
     plt.savefig("Graphs\spread_hist.pdf", dpi=100, format='pdf')
 
-    # Probability of the distribution of price increments
+    # Probability distribution of price increments
     def price_increments(x, lag):
         increment = [None] * (len(x) - lag)
         for i in range(lag, len(x)):
@@ -143,12 +144,12 @@ if __name__ == '__main__':
     midprice_sample = price_sample(midprice, h)
     plt.figure(figsize=(16, 12))
     plt.plot(midprice_sample, color="brown", linewidth=1.0, linestyle="-")
-    plt.title("Midprice of the LOB simulation")
+    plt.title("Process of midprice increments of the LOB simulation")
     plt.savefig("Graphs\midprice.pdf", dpi=100, format='pdf')
 
     # Histogram of the midprice increments
     increments = price_increments(midprice, h)
     plt.figure(figsize=(16, 12))
     plt.hist(increments, color="brown", bins=30)
-    plt.title("Midprice increments")
+    plt.title("Histogram of midprice increments")
     plt.savefig("Graphs\hist_midprice.pdf", dpi=100, format='pdf')

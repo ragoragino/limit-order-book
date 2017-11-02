@@ -1,6 +1,7 @@
 test.cpp
 test.exe
 test.obj
+**/main.cpp
 
 # Prerequisites
 **/*.d

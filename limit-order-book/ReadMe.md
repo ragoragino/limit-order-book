@@ -2,8 +2,8 @@
 
 This project implements a model of a limit order book inspired by the study Abergel, F., & Jedidi, A. (2013). 
 A mathematical approach to order book modeling. *International Journal of Theoretical and Applied Finance*, 16(05), 1350025.
-The core part is written in C++, while a Python binding is created with Pybind11. From Python, one can obtain the midprice 
-process of the simulation and the spread, both metrics for each time unit of the simulation.
+The core part is written in C++, while a Python binding is created with Pybind11. From Python, one can obtain the midprice and spread 
+process of the simulation for each time unit of the simulation, average bid and ask sizes and aggregate counters of individual order types.
 
 For the specific usage of library functionalities, see the [lob_graphs.py](https://github.com/ragoragino/limit-order-book/tree/master/limit-order-book/lob_graphs.py) file.
 

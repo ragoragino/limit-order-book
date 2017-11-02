@@ -3,14 +3,18 @@
 #include "Client.h"
 #include "NonConstMap.h"
 
+// limit specifies the number of visible points on the order book
+// no_clients specifies number of existing clients connected to the order book
+// order_inf_size specifies size of orders on a single tick beyond visible limit order book
+// default_spread specifies the default spread
 extern int limit, no_clients;
 extern double order_inf_size, default_spread;
+
 extern double decimal_round(double x, int points);
 
 /*
 Abstract base class that defines the functionality of the limit order book
 */
-
 class Book
 {
 public:
@@ -41,16 +45,16 @@ public:
 	~Book() = default;
 
 	/*
-	Virtual function that implements the first-entry processing of new order
+	Virtual function that implements the first-entry processing of new orders
 
 	@param
 	order: incoming order, instance of ClientOrder class
 	client_id: id of the originator of the order
-	other_side: pointer to the instance of the other side of the book
+	other_side: shared_ptr to the instance of the other side of the book
 
 	@return
 	*/
-	virtual void Act(ClientOrder& order, int client_id, Book *other_side) = 0;
+	virtual void Act(ClientOrder& order, int client_id, std::shared_ptr<Book> other_side) = 0;
 
 	/*
 	Virtual function that implements the retrieval of the current best bid/ask
@@ -61,7 +65,7 @@ public:
 	@return
 	double: current nbbo from the side of the class instance
 	*/
-	virtual double nbbo(Book *other_side) = 0;
+	virtual double nbbo(std::shared_ptr<Book> other_side) = 0;
 
 	/*
 	Virtual function that implements the shift to the right of the limit order book 
@@ -84,7 +88,6 @@ public:
 	@return
 	*/
 	virtual void move_left(int shift) = 0;
-
 
 	/*
 	Virtual function that implements the retrieval of the size of
@@ -122,9 +125,9 @@ class Order
 	friend Tick;
 
 public:
-	// Default _id and _client_id for inf_orders is -1, -1, respectively.
+	// Default _id and _client_id for inf_orders is -1, no_clients, respectively.
 	Order() : _size{ order_inf_size }, _id{ -1 },
-		_client_id{ no_clients } {}; // default client id
+		_client_id{ no_clients } {};
 
 	/*
 	Parameter constructor
@@ -144,7 +147,7 @@ public:
 	Parameter constructor
 
 	@param
-	client_order: instance of an ClientOrder
+	client_order: instance of a ClientOrder
 	in_client_id: id of the originator of the order
 
 	@return
@@ -175,7 +178,7 @@ public:
 	Tick()
 	{
 		// The order book will have order size specified by ord_inf_size at the beginning
-		_tick.emplace_back(Order());
+		_tick.emplace_back();
 	};
 
 	Tick(const Tick&) = default;
@@ -188,7 +191,7 @@ public:
 	Method that specifies quote processing 
 
 	@param
-	client_order: instance of an ClientOrder
+	client_order: instance of a ClientOrder
 	in_client_id: id of the originator of the order
 
 	@return
@@ -199,7 +202,7 @@ public:
 	Method that specifies trade processing
 
 	@param
-	client_order: instance of an ClientOrder
+	client_order: instance of a ClientOrder
 
 	@return
 	*/
@@ -209,7 +212,7 @@ public:
 	Method that specifies cancellation processing
 
 	@param
-	client_order: instance of an ClientOrder
+	client_order: instance of a ClientOrder
 	in_client_id: id of the originator of the order
 
 	@return
@@ -245,8 +248,8 @@ public:
 	}
 
 	/*
-	Method that cleans the tick from any orders and adds default order 
-	the to the book
+	Method that cleans the tick from any orders and adds default orders 
+	to the book
 
 	@param
 
@@ -258,7 +261,7 @@ public:
 		_tick.clear();
 
 		// inserted default Order with order_inf_size
-		_tick.emplace_front(Order()); 
+		_tick.emplace_front(); 
 
 		return this;
 	}
@@ -286,7 +289,7 @@ public:
 	Method that returns the size of all orders on the tick for a given client
 
 	@param
-	client_id: id of the originator of the order
+	client_id: id of the client
 
 	@return
 	double: size of all orders on the tick for a given client
@@ -307,13 +310,13 @@ public:
 
 	/*
 	Method that finds first order with a given client_id in Tick instance.
-	Used by the cancellation routine
+	Used by the cancellation routine.
 
 	@param
-	client_id: id of the originator of the order
+	client_id: id of the client
 
 	@return
-	double: size of all orders on the tick for a given client
+	int: id of the order that originates from given client_id
 	*/
 	int find_order(int client_id)
 	{
@@ -384,9 +387,9 @@ public:
 	*/
 	Bid(double in_default_price, std::shared_ptr<spdlog::logger> 
 		in_logger_device, std::vector<int> in_client_id) :
+		Book{ in_logger_device, in_client_id },
 		_default_price(in_default_price), 
-		_side(limit, default_spread),
-		Book{ in_logger_device, in_client_id } {};
+		_side(limit, default_spread) {};
 
 	Bid(const Bid&) = default;
 
@@ -398,7 +401,7 @@ public:
 	Index operator
 
 	@param
-	pos: querried position on the bid side of the limit order book
+	pos: querried position on the bid side of the limit order book -> as a key
 
 	@return
 	Tick&: reference to the Tick instance at the specified position
@@ -412,7 +415,7 @@ public:
 	Index operator
 
 	@param
-	pos: querried position on the bid side of the limit order book
+	pos: querried position on the bid side of the limit order book - > as a position
 
 	@return
 	Tick&: reference to the Tick instance at the specified position
@@ -423,7 +426,7 @@ public:
 	}
 
 	/*
-	Function that implements the first-entry processing of new order
+	Function that implements the first-entry processing of a new order
 
 	@param
 	order: incoming order, instance of ClientOrder class
@@ -432,7 +435,7 @@ public:
 
 	@return
 	*/
-	void Act(ClientOrder& order, int client_id, Book *other_side);
+	void Act(ClientOrder& order, int client_id, std::shared_ptr<Book> other_side);
 	
 	/*
 	Function that implements the retrieval of the current best bid
@@ -443,8 +446,7 @@ public:
 	@return
 	double: current nbbo from the side of the class instance
 	*/
-	double nbbo(Book *other_side);
-
+	double nbbo(std::shared_ptr<Book> other_side);
 
 	/*
 	Function that implements the shift to the right of the limit order book
@@ -545,7 +547,7 @@ public:
 
 	@return
 	*/
-	void Act(ClientOrder& order, int exchange_id, Book *other_side);
+	void Act(ClientOrder& order, int exchange_id, std::shared_ptr<Book> other_side);
 
 	/*
 	Function that implements the retrieval of the current best ask
@@ -556,7 +558,7 @@ public:
 	@return
 	double: current nbbo from the side of the class instance
 	*/
-	double nbbo(Book *other_side);
+	double nbbo(std::shared_ptr<Book> other_side);
 
 	/*
 	Function that implements the shift to the right of the limit order book

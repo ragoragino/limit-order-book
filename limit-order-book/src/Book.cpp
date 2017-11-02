@@ -55,7 +55,7 @@ bool Tick::cancel(const ClientOrder& client_order, int client_id)
 }
 
 
-double Bid::nbbo(Book *other_side)
+double Bid::nbbo(std::shared_ptr<Book> other_side)
 {
 	for (nonconst_map<Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
 	{
@@ -115,7 +115,7 @@ double Bid::nbbo(Book *other_side)
 }
 
 
-double Ask::nbbo(Book *other_side)
+double Ask::nbbo(std::shared_ptr<Book> other_side)
 {
 	for (nonconst_map<Tick>::iterator it = _side.begin(); it != _side.end(); ++it)
 	{
@@ -175,7 +175,7 @@ double Ask::nbbo(Book *other_side)
 }
 
 
-void Bid::Act(ClientOrder& order, int in_client_id, Book *other_side)
+void Bid::Act(ClientOrder& order, int in_client_id, std::shared_ptr<Book> other_side)
 {
 	int type = static_cast<int>(order.type_identifier % 3);
 
@@ -264,7 +264,7 @@ void Bid::Act(ClientOrder& order, int in_client_id, Book *other_side)
 }
 
 
-void Ask::Act(ClientOrder& order, int in_client_id, Book *other_side)
+void Ask::Act(ClientOrder& order, int in_client_id, std::shared_ptr<Book> other_side)
 {
 	int type = static_cast<int>(order.type_identifier % 3);
 

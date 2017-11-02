@@ -43,8 +43,8 @@ public:
 	@param
 	in_limit: length of the visible part of the limit order book
 	in_market_intensity: intensity of incoming market orders
-	in_quote_intensity: intensity of the incoming quote orders
-	in_cancel_intensity: intensity of the incoming cancel orders
+	in_quote_intensity: intensity of incoming quote orders
+	in_cancel_intensity: intensity of incoming cancel orders
 
 	@return
 	*/
@@ -97,16 +97,6 @@ public:
 	ClientOrder Query(const std::vector<double>& bid_order_sizes, 
 		const std::vector<double>& ask_order_sizes);
 
-	/*
-	Function that returns a random number in the interval (0, 1) 
-
-	@param
-
-	@return
-	double: random number in the interval (0, 1)
-	*/
-	double random_check();
-
 private:
 	/*
 	Function that returns a size of the new order
@@ -117,6 +107,16 @@ private:
 	double: size of the order
 	*/
 	double size_distribution();
+
+	/*
+	Function that returns a random number in the interval (0, 1)
+
+	@param
+
+	@return
+	double: random number in the interval (0, 1)
+	*/
+	double random_check();
 
 	std::vector<int> _id;
 	double _default_trade_price, _default_cancel_price, _default_cancel_size, 

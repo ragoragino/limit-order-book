@@ -125,7 +125,7 @@ public:
 
 	/*
 	Function that moves the map to the right by the amount of shift.
-	It is used for the cases, when a quote lands on empty tick. Then, 
+	It is used for the cases, when a quote lands on an empty tick. Then, 
 	new population of the other side of the market needs to be recomputed 
 	with respect to the new NBBO.
 
