@@ -16,8 +16,6 @@ np.random.seed(123)
 
 import Pybind_Wrapper
 
-# todo uprav z C types na python types v popise triedy
-
 if __name__ == '__main__':
     """
     Class for Limit Order Book simulation
